@@ -5,7 +5,7 @@ use App\Library\Html;
 use App\Models;
 use Illuminate\Http\Request;
 
-class HomeController extends SiteController {
+class EventController extends SiteController {
 
     public function newEvent(Request $request) {
 

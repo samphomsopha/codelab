@@ -10,7 +10,7 @@
 </head>
 <body id="page-top" class="index">
 <!-- Content -->
-<div class="container">
+<div class="container content">
     @yield('content')
 </div>
 {!!@$assets!!}

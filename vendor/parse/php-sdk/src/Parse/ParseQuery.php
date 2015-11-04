@@ -85,7 +85,7 @@ class ParseQuery
      *
      * @throws ParseException
      *
-     * @return array
+     * @return array|ParseObject Returns the selected object or an empty array
      */
     public function get($objectId, $useMasterKey = false)
     {
@@ -119,6 +119,12 @@ class ParseQuery
 
     /**
      * Helper for condition queries.
+     *
+     * @param string $key       The key to where constraints
+     * @param string $condition The condition name
+     * @param mixed  $value     The condition value, can be a string or an array of strings
+     *
+     * @throws Exception
      */
     private function addCondition($key, $condition, $value)
     {
@@ -212,6 +218,10 @@ class ParseQuery
      * Converts a string into a regex that matches it.
      * Surrounding with \Q .. \E does this, we just need to escape \E's in
      * the text separately.
+     *
+     * @param mixed $s The string or array being replaced.
+     *
+     * @return string Returns the string converted.
      */
     private function quote($s)
     {
@@ -272,7 +282,7 @@ class ParseQuery
      *
      * @param bool $useMasterKey If the query should use the master key
      *
-     * @return array
+     * @return array|ParseObject Returns the first object or an empty array
      */
     public function first($useMasterKey = false)
     {
@@ -334,7 +344,7 @@ class ParseQuery
      *
      * @param bool $useMasterKey
      *
-     * @return array
+     * @return ParseObject[]
      */
     public function find($useMasterKey = false)
     {
@@ -451,7 +461,8 @@ class ParseQuery
             $key = array_map(
                 function ($element) {
                     return '-'.$element;
-                }, $key
+                },
+                $key
             );
             $this->orderBy = array_merge($this->orderBy, $key);
         } else {
@@ -547,7 +558,8 @@ class ParseQuery
     public function withinGeoBox($key, $southwest, $northeast)
     {
         $this->addCondition(
-            $key, '$within',
+            $key,
+            '$within',
             ['$box' => [$southwest, $northeast]]
         );
 
@@ -681,7 +693,8 @@ class ParseQuery
         $queryParam = $query->_getOptions();
         $queryParam['className'] = $query->className;
         $this->addCondition(
-            $key, '$select',
+            $key,
+            '$select',
             ['key' => $queryKey, 'query' => $queryParam]
         );
 
@@ -705,7 +718,8 @@ class ParseQuery
         $queryParam = $query->_getOptions();
         $queryParam['className'] = $query->className;
         $this->addCondition(
-            $key, '$dontSelect',
+            $key,
+            '$dontSelect',
             ['key' => $queryKey, 'query' => $queryParam]
         );
 

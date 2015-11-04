@@ -5,18 +5,16 @@
             <div class="card text-center">
                 <div class="login-form">
                     <h1>Sign Up</h1>
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" action="{{route('processRegister')}}">
+                        {!! Form::token() !!}
                         <div class="form-group">
-                            <input type="name" class="form-control" id="name" placeholder="Name">
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Name">
                         </div>
                         <div class="form-group">
-                            <input type="email" class="form-control" id="email" placeholder="Email">
+                            <input type="text" name="email" class="form-control" id="email" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="password" placeholder="Password">
-                        </div>
-                        <div class="form-group">
-                            <input type="confirm-password" class="form-control" id="confirm-password" placeholder="Confirm Password">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                         </div>
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                         <div class="margin-top-20">

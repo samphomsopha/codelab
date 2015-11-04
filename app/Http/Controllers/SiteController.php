@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Library\Html;
 use Illuminate\Http\Request;
+use Parse\ParseUser;
+use Parse\ParseClient;
 
 class SiteController extends Controller {
 
     public function __construct(Request $request)
     {
         session_start();
+        ParseClient::initialize( config('parse.app_id'), config('parse.api_key'), config('parse.master_key'));
         //add default css and site js
         Html\Assets::addLink(Html\Link::Css('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400italic,600italic,600,700'));
         Html\Assets::addLink(Html\Link::Css('/vendor/bootstrap/3.3.5/bootstrap.min.css'));

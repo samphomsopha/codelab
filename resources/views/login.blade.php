@@ -5,12 +5,13 @@
             <div class="card text-center">
                 <div class="login-form">
                     <h1>Login</h1>
-                    <form method="post" enctype="multipart/form-data">
+                    <form method="post" enctype="multipart/form-data" action="{{route('processLogin')}}">
+                        {!! Form::token() !!}
                         <div class="form-group">
-                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                            <input type="text" name="username" class="form-control" id="username" placeholder="Email">
                         </div>
                         <div class="form-group">
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password">
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
                         <div class="margin-top-20">

@@ -62,5 +62,43 @@ h6 {
   margin: 0 auto;
   max-width: 400px;
 }
+.content .card .user-name {
+  float: left;
+}
+.content .card .profile-img {
+  max-width: 65px;
+  max-height: 65px;
+  float: left;
+}
+.content .card .profile-img img {
+  width: 60px;
+  height: 60px;
+  border-radius: 2em;
+}
+.content .placeholder {
+  padding: 20px;
+  background-color: #e9eaed;
+  border-bottom-color: #d0d1d5;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: #dfe0e4;
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: #dfe0e4;
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: #e5e6e9;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top-style: solid;
+  border-top-width: 1px;
+}
 
 /*# sourceMappingURL=default.css.map */

@@ -22,7 +22,7 @@ class GroupController extends SiteController {
         if (!empty($request->input('groupname'))) {
             $request->session()->set('groupName', $request->input('groupname'));
         }
-        
+
         //if logged process otherwise go to login form
         $current_user = ParseUser::getCurrentUser();
 

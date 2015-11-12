@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
     <div class="row margin-top-20">
-        <div class="col-xs-12">
+        <div class="col-xs-6 col-xs-offset-3 text-center margin-top-20">
             <div class="card text-center">
                 <div class="login-form">
                     <h1>Sign Up</h1>

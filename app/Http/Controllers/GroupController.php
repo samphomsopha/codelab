@@ -45,7 +45,7 @@ class GroupController extends SiteController {
             }
         } else {
             //show login
-            return redirect()->route('login');
+            return redirect()->route('register');
         }
     }
 

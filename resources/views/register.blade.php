@@ -19,7 +19,7 @@
                         <button type="submit" class="btn btn-primary">Sign Up</button>
                         <div class="margin-top-20">
                             <p><a role="button" class="btn btn-primary btn-width-300" href="{{$fb_login_url}}">Sign up With Facebook</a></p>
-                            <p><a role="button" class="btn btn-primary btn-width-300" href="#">Sign up With Google</a></p>
+                            <!--<p><a role="button" class="btn btn-primary btn-width-300" href="#">Sign up With Google</a></p>-->
                             <p>Already have an account? <a href="/login">Login</a></p>
                         </div>
                     </form>

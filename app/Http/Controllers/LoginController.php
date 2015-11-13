@@ -15,12 +15,15 @@ class LoginController extends SiteController {
     public function showLogin(Request $request) {
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/login.js')));
         $renderData = $this->getRenderData($request);
         $redirect_url = $request->getSchemeAndHttpHost().'/fblogin';
         $permissions = ['email'];
         $fb = new Facebook(['app_id' => config('facebook.app_id'), 'app_secret' => config('facebook.app_secret'), 'default_graph_version' => 'v2.2']);
         $helper = $fb->getRedirectLoginHelper();
         $renderData['fb_login_url'] = $helper->getLoginUrl($redirect_url, $permissions);
+        $renderData['msg'] = '';
+        $renderData['activeTab'] = 'login';
         return view('login', $renderData);
     }
 
@@ -32,8 +35,10 @@ class LoginController extends SiteController {
         $permissions = ['email'];
         $fb = new Facebook(['app_id' => config('facebook.app_id'), 'app_secret' => config('facebook.app_secret'), 'default_graph_version' => 'v2.2']);
         $helper = $fb->getRedirectLoginHelper();
+        $renderData['msg'] = '';
+        $renderData['activeTab'] = 'signup';
         $renderData['fb_login_url'] = $helper->getLoginUrl($redirect_url, $permissions);
-        return view('register', $renderData);
+        return view('login', $renderData);
     }
 
     public function processRegister(Request $request) {

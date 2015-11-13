@@ -17,5 +17,5 @@ elixir(function(mix) {
         ],
         'public/css/default.css');
 
-    mix.version(['css/default.css'])
+    mix.version(['css/default.css','scripts/login.js'])
 });

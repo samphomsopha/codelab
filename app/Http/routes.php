@@ -13,6 +13,7 @@
 
 Route::get('/', 'HomeController@showIndex');
 Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
+Route::get('/calendar', ['as' => 'calendar', 'uses' => 'HomeController@showCalendar']);
 Route::match(array('GET','POST'), '/new-group','GroupController@newGroup');
 Route::get('/join-group','GroupController@joinGroup');
 Route::match(array('GET','POST'),'/process-group',['as' => 'processGroup', 'uses' => 'GroupController@processGroup']);

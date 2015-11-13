@@ -13,6 +13,40 @@
 <div class="container content">
     @yield('content')
 </div>
+
+<nav class="navbar navbar-default navbar-fixed-bottom nav-bottom">
+    <ul class="nav nav-pills">
+        <li role="presentation" class="active">
+            <a href="/home">
+                <div class="nav-icon"><i class="fa fa-newspaper-o"></i></span></div>
+                <div class="nav-link">Dashboard</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="/calendar">
+                <div class="nav-icon"><i class="fa fa-calendar"></i></div>
+                <div class="nav-link">Calendar</div>
+            </a>
+        </li>
+        <li role="presentation">
+            <a href="#">
+                <div class="nav-icon"><i class="fa fa-users"></i></div>
+                <div class="nav-link">Groups</div>
+            </a>
+        </li>
+        <li role="presentation" class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                <div class="nav-icon"><i class="fa fa-bars"></i></span></div>
+                <div class="nav-link">
+                    More <span class="caret"></span>
+                </div>
+            </a>
+            <ul class="dropdown-menu">
+                <li>hello</li>
+            </ul>
+        </li>
+    </ul>
+</nav>
 {!!@$assets!!}
 {!!@$inlinescript!!}
 </body>

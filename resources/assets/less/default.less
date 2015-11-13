@@ -1,6 +1,12 @@
+@light-blue: #337ab7;
+
 body {
   font-family: 'Source Sans Pro', san-serif;
   background-color: rgb(233, 234, 237);
+  .content {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
 }
 h1 {
   font-size: 48px;
@@ -31,14 +37,48 @@ h6 {
   width: 300px;
 }
 
+.margin-top-5 {
+  margin-top: 5px;
+}
+
 .margin-top-20 {
   margin-top: 20px;
 }
+
+.padding-zero {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.status {
+  height: 50px;
+}
+
+.msg {
+  font-size: 16px;
+  font-family: inherit;
+}
+
+.nav {
+  li {
+    text-align: center;
+    width: 23%;
+    a {
+      padding: 0;
+    }
+  }
+
+}
+
 .content {
+  .title {
+    margin-top: 0px;
+  }
+
   .card {
     margin: 0 auto;
     padding: 10px;
-    width: 80%;
+    width: 98%;
     background-color: rgb(255, 255, 255);
     border-bottom-color: rgb(208, 209, 213);
     border-bottom-left-radius: 3px;
@@ -72,11 +112,44 @@ h6 {
     .profile-img {
       max-width: 65px;
       max-height: 65px;
-      float: left;
       img {
         width: 60px;
         height: 60px;
         border-radius: 2em;
+      }
+    }
+  }
+  
+  .card-b {
+    width: 96%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    .group-name {
+      width: 100%;
+      display: block;
+      font-size: 16px;
+    }
+    .event-name {
+      .timestamp {
+        float: right;
+        color:@light-blue;
+      }
+    }
+    .message {
+      padding-top:5px;
+      padding-left:5px;
+      .profile-img {
+        border-radius: 10px;
+        margin-right: 5px;
+        max-width: 100%;
+        img {
+          width: 25px;
+          height: 25px;
+          border-radius: 5px;
+        }
+      }
+      .text {
+        float: left;
       }
     }
   }

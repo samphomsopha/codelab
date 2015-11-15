@@ -42,9 +42,4 @@
             <!-- Responsive calendar - END -->
         </div>
     </div>
-    <script>
-        $( document ).ready( function() {
-            $('.responsive-calendar').responsiveCalendar();
-        });
-    </script>
 @stop

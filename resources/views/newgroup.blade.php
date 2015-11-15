@@ -7,11 +7,13 @@
                 <form method="post" enctype="multipart/form-data" action="{{route('processGroup')}}">
                     {!! Form::token() !!}
                     <div class="form-group">
-                        <label for="groupname">Group Name</label>
                         <input type="text" name="groupname" class="form-control" id="groupname" placeholder="Group Name">
                     </div>
                     <div class="placeholder">
-                        Invite PlaceHolder
+                        <label for="groupname">Invite Your Friends</label>
+                        <div class="friends"></div>
+                        <input type="text" name="invite" class="form-control" id="invite" placeholder="Add Email">
+                        <button class="btn btn-primary invite-btn">Add</button>
                     </div>
                     <div class="margin-top-20">
                         <p>

@@ -6,6 +6,7 @@ use App\Models;
 use Illuminate\Http\Request;
 use Parse\ParseUser;
 use Parse\ParseObject;
+use Parse\ParseQuery;
 
 class GroupController extends SiteController {
 
@@ -13,15 +14,12 @@ class GroupController extends SiteController {
 
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/newgroup.js')));
         $renderData = $this->getRenderData($request);
         return view('newgroup', $renderData);
     }
 
     public function processGroup(Request $request) {
-        $request->session()->set('lastAction', 'newgroup');
-        if (!empty($request->input('groupname'))) {
-            $request->session()->set('groupName', $request->input('groupname'));
-        }
 
         //if logged process otherwise go to login form
         $current_user = ParseUser::getCurrentUser();
@@ -29,14 +27,20 @@ class GroupController extends SiteController {
         if (!empty($current_user)) {
             //process form
             $lastAction = $request->session()->get('lastAction');
-            $groupName = $request->session()->get('groupName');
+            $groupName = $request->input('groupname') ? : $request->session()->get('newgroup:groupName');
+            $invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
 
             $groupObj = new ParseObject('Groups');
             $groupObj->set('name', $groupName);
             $groupObj->set('user', $current_user);
+            if (empty($invites)) {
+                $invites = [];
+            }
+            $groupObj->setArray('invites', $invites);
+            $groupObj->set('inviteCode', $this->generate_random_letters(6));
             try {
                 $groupObj->save();
-                return redirect()->route('home');
+                return redirect()->route('editgroup', ['id' => $groupObj->getObjectId()]);
             }
             catch (ParseException $ex) {
                 // Execute any logic that should take place if the save fails.
@@ -44,7 +48,10 @@ class GroupController extends SiteController {
                 echo 'Failed to create new object, with error message: ' . $ex->getMessage();
             }
         } else {
-            //show login
+            //save form show login
+            $request->session()->set('lastAction', 'newgroup');
+            $request->session()->set('newgroup:groupName', $request->input('groupname'));
+            $request->session()->set('newgroup:invites', $request->input('invites'));
             return redirect()->route('register');
         }
     }
@@ -55,5 +62,70 @@ class GroupController extends SiteController {
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
         return view('joingroup', $renderData);
+    }
+
+    public function showGroup(Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            return redirect()->route('login');
+        }
+        Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        $renderData = $this->getRenderData($request);
+        $renderData['user'] = $current_user;
+        return view('group', $renderData);
+    }
+
+    public function showGroups(Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            return redirect()->route('login');
+        }
+        $query = new ParseQuery("Groups");
+        $query->equalTo('user', $current_user);
+        $groups = $query->find();
+        Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        $renderData = $this->getRenderData($request);
+        $renderData['user'] = $current_user;
+        $renderData['activeBarTab'] = "groups";
+        $renderData['groups'] = $groups;
+
+        return view('groups', $renderData);
+    }
+
+    public function editGroup($groupid, Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            return redirect()->route('login');
+        }
+        Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        $query = new ParseQuery("Groups");
+        try {
+            $group = $query->get($groupid);
+            // The object was retrieved successfully.
+            $renderData = $this->getRenderData($request);
+            $renderData['user'] = $current_user;
+            $renderData['group'] = $group;
+            return view('editgroup', $renderData);
+
+        } catch (ParseException $ex) {
+            // The object was not retrieved successfully.
+            // error is a ParseException with an error code and message.
+            echo $ex->getMessage();
+        }
+
+    }
+
+    function generate_random_letters($length) {
+        $random = '';
+        for ($i = 0; $i < $length; $i++) {
+            $random .= chr(rand(ord('a'), ord('z')));
+        }
+        return $random;
     }
 }

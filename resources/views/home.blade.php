@@ -20,15 +20,13 @@
     <div class="row card card-b">
         <div class="col-xs-12 padding-zero">
             <div class="group-name">
-                <i class="fa fa-users"></i> Chem Class 101 Study Group
-            </div>
-            <div class="event-name">
-                <i class="fa fa-comments-o"></i> Mid Terms
-                <span class="timestamp">5 minutes ago</span>
+                <a href="/group"><i class="fa fa-users"></i> Chem Class 101 Study Group</a>
+                <a href="/chat"><span class="ft-right"></ap><i class="fa fa-comments-o"></i> Mid Term</span></a>
             </div>
         </div>
         <div class="col-xs-12">
             <div class="message">
+                <a href="/chat">
                 <div class="row">
                     <div class="profile-img">
                         <img src="/img/profiles/1.jpeg"/>
@@ -36,23 +34,23 @@
                     </div>
                     <div class="text">
                         <p>Hey guys thanks for coming to the study group tonight!</p>
+                        <span class="timestamp">5 minutes ago</span>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     </div>
     <div class="row card card-b">
         <div class="col-xs-12 padding-zero">
             <div class="group-name">
-                <i class="fa fa-users"></i> Chem Class 101 Study Group
-            </div>
-            <div class="event-name">
-                <i class="fa fa-comments-o"></i> Mid Terms
-                <span class="timestamp">8 minutes ago</span>
+                <a href="/group"><i class="fa fa-users"></i> Chem Class 101 Study Group</a>
+                <a href="/chat"><span class="ft-right"><i class="fa fa-comments-o"></i> Mid Term</span></a>
             </div>
         </div>
         <div class="col-xs-12">
             <div class="message">
+                <a href="/chat">
                 <div class="row">
                     <div class="profile-img">
                         <img src="/img/profiles/2.jpeg"/>
@@ -60,9 +58,10 @@
                     </div>
                     <div class="text">
                         <p>Hey guys thanks for coming to the study group tonight!</p>
+                        <span class="timestamp">8 minutes ago</span>
                     </div>
                 </div>
-
+                </a>
             </div>
         </div>
     </div>
@@ -70,10 +69,7 @@
         <div class="col-xs-12 padding-zero">
             <div class="group-name">
                 <i class="fa fa-users"></i> Finance Class Study Group
-            </div>
-            <div class="event-name">
-                <i class="fa fa-comments-o"></i> Finals
-                <span class="timestamp">30 minutes ago</span>
+                <span class="ft-right"><i class="fa fa-comments-o"></i> Final</span>
             </div>
         </div>
         <div class="col-xs-12">
@@ -85,10 +81,43 @@
                     </div>
                     <div class="text">
                         <p>What's the power of compound interest?</p>
+                        <span class="timestamp">30 minutes ago</span>
                     </div>
                 </div>
 
             </div>
+        </div>
+    </div>
+    <div class="row card card-b">
+        <div class="col-xs-12 padding-zero">
+            <div class="group-name">
+                <a href="/group"><i class="fa fa-users"></i> Chem Class 101 Study Group</a>
+                <a href="/chat"><span class="ft-right"><i class="fa fa-comments-o"></i> Final</span></a>
+            </div>
+        </div>
+        <div class="col-xs-12">
+            <div class="message">
+                <a href="/chat">
+                    <div class="row">
+                        <div class="profile-img">
+                            <img src="/img/profiles/4.jpeg"/>
+                            Sarah Day
+                        </div>
+                        <div class="text">
+                            <p>OMG final will be so hard!!!</p>
+                            <div class="video-container">
+                            <iframe width="853" height="480" src="https://www.youtube.com/embed/4JFmQNuG7AY" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <span class="timestamp">1 hour ago</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="spacer"></div>
         </div>
     </div>
 @stop

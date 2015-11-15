@@ -26,6 +26,7 @@ class HomeController extends SiteController {
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
         $renderData['user'] = $current_user;
+        $renderData['activeBarTab'] = "dashboard";
         return view('home', $renderData);
     }
 
@@ -36,9 +37,11 @@ class HomeController extends SiteController {
             return redirect()->route('login');
         }
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/calendar.js')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
         $renderData['user'] = $current_user;
+        $renderData['activeBarTab'] = "calendar";
         return view('calendar', $renderData);
     }
 }

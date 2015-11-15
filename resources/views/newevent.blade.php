@@ -1,9 +1,10 @@
 @extends('master')
 @section('content')
-    <div class="row margin-top-20">
-        <div class="col-xs-12 text-center margin-top-20 col-md-6 col-md-offset-3">
+    @include('navheader')
+    <div class="row">
+        <div class="col-xs-12 text-center col-md-6 col-md-offset-3">
             <div class="card">
-                <h1>Add A New Event</h1>
+                <h1>Add Event</h1>
                 <form method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Email address</label>

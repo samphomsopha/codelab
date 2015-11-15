@@ -16,20 +16,20 @@
 
 <nav class="navbar navbar-default navbar-fixed-bottom nav-bottom">
     <ul class="nav nav-pills">
-        <li role="presentation" class="active">
+        <li role="presentation"@if (@$activeBarTab =="dashboard") class="active"@endif>
             <a href="/home">
                 <div class="nav-icon"><i class="fa fa-newspaper-o"></i></span></div>
                 <div class="nav-link">Dashboard</div>
             </a>
         </li>
-        <li role="presentation">
+        <li role="presentation"@if (@$activeBarTab =="calendar") class="active"@endif>
             <a href="/calendar">
                 <div class="nav-icon"><i class="fa fa-calendar"></i></div>
                 <div class="nav-link">Calendar</div>
             </a>
         </li>
-        <li role="presentation">
-            <a href="#">
+        <li role="presentation"@if (@$activeBarTab =="groups") class="active"@endif>
+            <a href="/groups">
                 <div class="nav-icon"><i class="fa fa-users"></i></div>
                 <div class="nav-link">Groups</div>
             </a>
@@ -42,7 +42,10 @@
                 </div>
             </a>
             <ul class="dropdown-menu">
-                <li>hello</li>
+                <li>Add Event</li>
+                <li>Invite Friends</li>
+                <li><a href="{{route('newgroup')}}">New Group</a></li>
+                <li>Join Group</li>
             </ul>
         </li>
     </ul>

@@ -111,6 +111,7 @@ class EventController extends SiteController {
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
+        $renderData['navTitle'] = "Join Event";
         return view('joinevent', $renderData);
     }
 

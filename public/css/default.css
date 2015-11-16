@@ -64,8 +64,11 @@ h6 {
 .nav li a {
   padding: 0;
 }
+.nav .dropdown-menu {
+  font-size: 18px;
+}
 .nav .dropdown-menu li {
-  width: 95%;
+  width: 100%;
 }
 .content .title {
   margin-top: 0px;

@@ -49,7 +49,7 @@ class EventController extends SiteController {
                 }
                 $eventObj->setArray('invites', $invites);
                 $eventObj->set('user', $current_user);
-
+                $eventObj->set('group', $group);
                 try {
                     $eventObj->save();
                     $relation = $eventObj->getRelation('members');

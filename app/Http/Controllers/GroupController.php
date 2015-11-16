@@ -100,7 +100,29 @@ class GroupController extends SiteController {
                 $temp['events'][] = $event;
             }
 
-            $dGroups[] = $temp;
+            $dGroups[$group->getObjectId()] = $temp;
+        }
+
+        //find events that this user maybe a member of
+        $query = new ParseQuery("Events");
+        $query ->equalTo('members', $current_user);
+        $query->includeKey('group');
+        $events = $query->find();
+
+        foreach($events as $event)
+        {
+            // if user owns this group, don't add
+            $tgroup = $event->get('group');
+            if ($tgroup->get('user') != $current_user) {
+                $temp = array_get($dGroups, $tgroup->getObjectId());
+                if (empty($temp)) {
+                    $temp['group'] = $tgroup;
+                    $temp['events'] = array();
+                }
+                $temp['events'][] = $event;
+
+                $dGroups[$tgroup->getObjectId()] = $temp;
+            }
         }
 
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));

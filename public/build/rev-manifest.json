@@ -1,6 +1,8 @@
 {
-  "css/default.css": "css/default-1913ceee75.css",
+  "css/default.css": "css/default-b64caa8166.css",
   "scripts/calendar.js": "scripts/calendar-062020e3b1.js",
+  "scripts/footer.js": "scripts/footer-88bba52ac4.js",
   "scripts/login.js": "scripts/login-61820ab6b5.js",
+  "scripts/newevent.js": "scripts/newevent-6caa812cf8.js",
   "scripts/newgroup.js": "scripts/newgroup-1aee317aea.js"
 }

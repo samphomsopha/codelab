@@ -28,15 +28,15 @@ class GroupController extends SiteController {
             //process form
             $lastAction = $request->session()->get('lastAction');
             $groupName = $request->input('groupname') ? : $request->session()->get('newgroup:groupName');
-            $invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
+            //$invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
 
             $groupObj = new ParseObject('Groups');
             $groupObj->set('name', $groupName);
             $groupObj->set('user', $current_user);
-            if (empty($invites)) {
+            /*if (empty($invites)) {
                 $invites = [];
             }
-            $groupObj->setArray('invites', $invites);
+            $groupObj->setArray('invites', $invites);*/
             $groupObj->set('inviteCode', $this->generate_random_letters(6));
             try {
                 $groupObj->save();

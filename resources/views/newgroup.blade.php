@@ -9,12 +9,6 @@
                     <div class="form-group">
                         <input type="text" name="groupname" class="form-control" id="groupname" placeholder="Group Name">
                     </div>
-                    <div class="placeholder">
-                        <label for="groupname">Invite Your Friends</label>
-                        <div class="friends"></div>
-                        <input type="text" name="invite" class="form-control" id="invite" placeholder="Add Email">
-                        <button class="btn btn-primary invite-btn">Add</button>
-                    </div>
                     <div class="margin-top-20">
                         <p>
                             <button type="submit" class="btn btn-primary">Submit</button>

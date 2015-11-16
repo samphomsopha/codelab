@@ -17,5 +17,8 @@ elixir(function(mix) {
         ],
         'public/css/default.css');
 
-    mix.version(['css/default.css','scripts/login.js','scripts/calendar.js','scripts/newgroup.js']);
+    mix.version(['css/default.css','scripts/login.js','scripts/calendar.js',
+        'scripts/newgroup.js',
+        'scripts/footer.js',
+        'scripts/newevent.js']);
 });

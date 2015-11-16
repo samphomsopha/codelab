@@ -249,5 +249,8 @@ h6 {
   height: 75px;
   width: 100%;
 }
+.display-block {
+  display: block;
+}
 
 /*# sourceMappingURL=default.css.map */

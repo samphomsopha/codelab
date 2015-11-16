@@ -21,10 +21,13 @@ Route::get('/editgroup/{id}', ['as' => 'editgroup', 'uses' => 'GroupController@e
 Route::match(array('GET','POST'), '/new-group', ['as' => 'newgroup','uses' => 'GroupController@newGroup']);
 Route::match(array('GET','POST'), '/join-group', ['as' => 'joingroup','uses' => 'GroupController@joinGroup']);
 
+/** Events */
+Route::get('/join-event','EventController@joinEvent');
+Route::get('/editevent/{id}', ['as' => 'editEvent', 'uses' => 'EventController@editEvent']);
+
 Route::get('/chat', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
 Route::match(array('GET','POST'), '/process-group',['as' => 'processGroup', 'uses' => 'GroupController@processGroup']);
 Route::match(array('GET', 'POST'), '/group/{gid}/new-event',['as' => 'newEvent', 'uses' => 'EventController@newEvent']);
-Route::get('/join-event','EventController@joinEvent');
 Route::get('/login', ['as' => 'login', 'uses' => 'LoginController@showLogin']);
 Route::get('/logout', ['as' => 'logout', 'uses' => 'LoginController@processLogout']);
 Route::match(array('GET', 'POST'), '/process-login', ['as' => 'processLogin', 'uses' => 'LoginController@processLogin']);

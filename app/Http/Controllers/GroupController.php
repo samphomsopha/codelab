@@ -86,12 +86,29 @@ class GroupController extends SiteController {
         $query = new ParseQuery("Groups");
         $query->equalTo('user', $current_user);
         $groups = $query->find();
+        $dGroups = array();
+        foreach($groups as $group)
+        {
+            $temp = array();
+            $temp['group'] = $group;
+            $temp['events'] = array();
+            $relation = $group->getRelation("events");
+            $query = $relation->getQuery();
+            $events = $query->find();
+            foreach($events as $event)
+            {
+                $temp['events'][] = $event;
+            }
+
+            $dGroups[] = $temp;
+        }
+
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
         $renderData['user'] = $current_user;
         $renderData['activeBarTab'] = "groups";
-        $renderData['groups'] = $groups;
+        $renderData['dGroups'] = $dGroups;
 
         return view('groups', $renderData);
     }

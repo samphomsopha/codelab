@@ -177,6 +177,11 @@ h6 {
   font-family: inherit;
   font-size: 20px;
 }
+.content .message-entry {
+  position: fixed;
+  bottom: 45px;
+  width: 100%;
+}
 .content .placeholder {
   padding: 20px;
   background-color: #e9eaed;
@@ -253,8 +258,15 @@ h6 {
   height: 75px;
   width: 100%;
 }
+.spacer-chat {
+  height: 125px;
+  width: 100%;
+}
 .display-block {
   display: block;
+}
+.error {
+  color: red;
 }
 
 /*# sourceMappingURL=default.css.map */

@@ -78,9 +78,121 @@
             </div>
         </div>
     </div>
+    <div class="row card card-b self">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profile.png"/>
+                        Sam Phomsopha
+                    </div>
+                    <div class="text">
+                        <p>Looking forward to meeting tonight!</p>
+                        <p class="timestamp">1 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row card card-b">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profiles/7.jpeg"/>
+                        Mark
+                    </div>
+                    <div class="text">
+                        <p>Meeting is set for 9pm @SBUX</p>
+                        <p class="timestamp">10 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row card card-b self">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profile.png"/>
+                        Sam Phomsopha
+                    </div>
+                    <div class="text">
+                        <p>Looking forward to meeting tonight!</p>
+                        <p class="timestamp">1 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row card card-b">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profiles/7.jpeg"/>
+                        Mark
+                    </div>
+                    <div class="text">
+                        <p>Meeting is set for 9pm @SBUX</p>
+                        <p class="timestamp">10 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row card card-b self">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profile.png"/>
+                        Sam Phomsopha
+                    </div>
+                    <div class="text">
+                        <p>Looking forward to meeting tonight!</p>
+                        <p class="timestamp">1 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row card card-b">
+        <div class="col-xs-12">
+            <div class="message">
+                <div class="row">
+                    <div class="profile-img">
+                        <img src="/img/profiles/7.jpeg"/>
+                        Mark
+                    </div>
+                    <div class="text">
+                        <p>Meeting is set for 9pm @SBUX</p>
+                        <p class="timestamp">10 hour ago</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="col-xs-12">
-            <div class="spacer"></div>
+            <div class="spacer-chat"></div>
+        </div>
+    </div>
+    <div class="row card card-b message-entry">
+        <div class="col-xs-12">
+                <form method="post" enctype="multipart/form-data">
+                    {!! Form::token() !!}
+                    <div class="form-group">
+                        <input type="text" name="message" class="form-control" id="name" placeholder="Type message">
+                    </div>
+                </form>
         </div>
     </div>
 @stop

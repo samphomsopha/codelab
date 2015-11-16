@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Parse\ParseUser;
 use Parse\ParseQuery;
 use Parse\ParseObject;
+use Parse\ParseRelation;
 
 class EventController extends SiteController {
 
@@ -33,26 +34,39 @@ class EventController extends SiteController {
             {
                 $eventName = $request->input('name');
                 $eventDate = $request->input('eventDate');
-                $invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
-
-                //$time = $eventDate;
-                //$eventDate = date('m-d-Y', $time);
-                $eventDate = new \DateTime();
+                $invites = $request->input('invites');
                 $eventObj = new ParseObject('Events');
                 $eventObj->set('name', $eventName);
-                $eventObj->set('date', $eventDate);
+                if (!empty($eventDate))
+                {
+                    $eventDate = new \DateTime($eventDate);
+                    $eventObj->set('date', $eventDate);
+                }
                 $eventObj->set('inviteCode', $this->generate_random_letters(6));
 
                 if (empty($invites)) {
                     $invites = [];
                 }
                 $eventObj->setArray('invites', $invites);
+                $eventObj->set('user', $current_user);
 
                 try {
+                    $eventObj->save();
+                    $relation = $eventObj->getRelation('members');
+                    $relation->add($current_user);
                     $eventObj->save();
                     $grelation = $group->getRelation('events');
                     $grelation->add($eventObj);
                     $group->save();
+                    //-- create chat room --//
+                    $chatObj = new ParseObject('ChatRoom');
+                    $chatObj->set('name', $eventObj->get('name'));
+                    $chatObj->save();
+                    $relation = $chatObj->getRelation('members');
+                    $relation->add($current_user);
+                    $chatObj->save();
+                    $eventObj->set('chatRoom', $chatObj);
+                    $eventObj->save();
                     return redirect()->route('editEvent', ['id' => $eventObj->getObjectId()]);
                 }
                 catch (ParseException $ex) {
@@ -108,9 +122,56 @@ class EventController extends SiteController {
     }
 
     public function joinEvent(Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
+
+        if ($request->method() == "POST" || $request->session()->get('lastAction') == 'joinevent')
+        {
+            if (!empty($current_user))
+            {
+                $code = $request->input('eventCode') ? : $request->session()->get('joinevent:inviteCode');
+                $query = new ParseQuery("Events");
+                try {
+                    $query->equalTo('inviteCode', $code);
+                    $query->includeKey('chatRoom');
+                    $eventObj = $query->find();
+                    if (count($eventObj) > 0)
+                    {
+                        $eventObj = $eventObj[0];
+                        $relation = $eventObj->getRelation('members');
+                        $relation->add($current_user);
+                        $eventObj->save();
+                        //add member to chatroom
+                        $chatObj = $eventObj->get('chatRoom');
+                        $relation = $chatObj->getRelation('members');
+                        $relation->add($current_user);
+                        $chatObj->save();
+                        //clear last action
+                        $request->session()->set('lastAction', '');
+                        //redirect to chatroom
+                        return redirect()->route('chat', ['roomId' => $chatObj->getObjectId()]);
+                }
+                    else
+                    {
+                        $renderData['errorMsg'] = "Sorry invite code '{$code}' is not valid.'";
+                    }
+                } catch (ParseException $ex) {
+                    // The object was not retrieved successfully.
+                    // error is a ParseException with an error code and message.
+                    echo $ex->getMessage();
+                }
+            }
+            else
+            {
+                $request->session()->set('lastAction', 'joinevent');
+                $request->session()->set('joinevent:inviteCode', $request->input('inviteCode'));
+                return redirect()->route('register');
+            }
+        }
+
         $renderData['navTitle'] = "Join Event";
         return view('joinevent', $renderData);
     }

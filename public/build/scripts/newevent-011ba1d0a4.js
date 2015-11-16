@@ -15,7 +15,10 @@ $(function ($) {
         }
     };
 
-    $( "#eventDate" ).pickadate();
+    $( "#eventDate" ).pickadate({
+        formatSubmit: 'mm/dd/yyyy',
+        format: 'mm/dd/yyyy'
+    });
 
     $("#invite").bind("keypress", function(e) {
         if(e.which == 13) {

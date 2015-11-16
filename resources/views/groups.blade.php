@@ -9,8 +9,8 @@
                 </div>
                 @foreach($groupData['events'] as $event)
                     <div class="event-name">
-                        <i class="fa fa-comments-o"></i> {{$event->get('name')}}
-                        <span class="timestamp">11/23/2015</span>
+                        <i class="fa fa-comments-o"></i> <a href="{{route('chat', ['roomId' => $event->get('chatRoom')->getObjectId()])}}">{{$event->get('name')}}</a> <a href="{{route('editEvent', ['id' => $event->getObjectId()])}}">[edit]</a>
+                        <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
                     </div>
                 @endforeach
                 <div class="event-name">
@@ -19,7 +19,7 @@
             </div>
         </div>
     @endforeach
-    @if (empty($groups))
+    @if (empty($dGroups))
         <div class="row card card-b">
             <p class="title">Oops looks like you don't have any groups. Create one and invite your friends!</p>
             <button class="btn"><a href="{{route('newgroup')}}">Create A Group</a></button>

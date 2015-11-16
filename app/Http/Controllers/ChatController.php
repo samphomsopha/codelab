@@ -8,7 +8,7 @@ use Parse\ParseUser;
 
 class ChatController extends SiteController {
 
-    public function showChat(Request $request) {
+    public function showChat($roomId, Request $request) {
 
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)

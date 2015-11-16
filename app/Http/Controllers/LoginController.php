@@ -71,6 +71,7 @@ class LoginController extends SiteController {
     }
 
     public function processLogout(Request $request) {
+        $request->session()->set('lastAction', '');
         ParseUser::logOut();
         return redirect('/');
     }
@@ -155,6 +156,9 @@ class LoginController extends SiteController {
         switch($last_action) {
             case "newgroup":
                 return redirect()->route('processGroup');
+                break;
+            case "joinevent":
+                return redirect()->route('joinEvent');
                 break;
             default:
                 return redirect()->route('home');

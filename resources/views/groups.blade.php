@@ -23,7 +23,7 @@
         <div class="row card card-b">
             <p class="title">Oops looks like you don't have any groups. Create one and invite your friends!</p>
             <button class="btn"><a href="{{route('newgroup')}}">Create A Group</a></button>
-            <button class="btn"><a href="{{route('joingroup')}}">Join A Group</a></button>
+            <button class="btn"><a href="{{route('joinGroup')}}">Join A Group</a></button>
         </div>
     @endif
 @stop

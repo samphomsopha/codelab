@@ -9,6 +9,9 @@
                 <span class="ft-right">+Invite</span>
             </div>
             <div class="share">
+                Invite Code: <b>{{$group->get('inviteCode')}}</b>
+            </div>
+            <div class="share">
                 Shared Docs(0) <a href="/{{route('upload', ['forid' => $group->getObjectId()])}}">+ Add Docs</a>
             </div>
         </div>

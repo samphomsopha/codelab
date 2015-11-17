@@ -9,7 +9,7 @@
         <div class="card">
             <h3>Welcome</h3>
             <p><a role="button" href="/new-group" class="btn btn-primary btn-width-300">Create Group</a></p>
-            <p><a role="button" href="/join-event" class="btn btn-primary btn-width-300">Join Event</a></p>
+            <p><a role="button" href="/join-group" class="btn btn-primary btn-width-300">Join Group</a></p>
         </div>
     </div>
 </div>

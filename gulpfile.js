@@ -20,5 +20,6 @@ elixir(function(mix) {
     mix.version(['css/default.css','scripts/login.js','scripts/calendar.js',
         'scripts/newgroup.js',
         'scripts/footer.js',
-        'scripts/newevent.js']);
+        'scripts/newevent.js',
+        'scripts/chat.js']);
 });

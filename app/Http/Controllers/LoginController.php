@@ -157,6 +157,9 @@ class LoginController extends SiteController {
             case "newgroup":
                 return redirect()->route('processGroup');
                 break;
+            case "joingroup":
+                return redirect()->route('joinGroup');
+                break;
             case "joinevent":
                 return redirect()->route('joinEvent');
                 break;

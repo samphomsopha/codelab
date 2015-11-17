@@ -16,10 +16,11 @@ Route::get('/home', ['as' => 'home', 'uses' => 'HomeController@showHome']);
 Route::get('/calendar', ['as' => 'calendar', 'uses' => 'HomeController@showCalendar']);
 /** Group **/
 Route::get('/groups', ['as' => 'groups', 'uses' => 'GroupController@showGroups']);
-Route::get('/group', ['as' => 'group', 'uses' => 'GroupController@showGroup']);
+Route::get('/group/', ['as' => 'group', 'uses' => 'GroupController@showGroup']);
+Route::get('/group/{id}', ['as' => 'groupView', 'uses' => 'GroupController@showGroupView']);
 Route::get('/editgroup/{id}', ['as' => 'editgroup', 'uses' => 'GroupController@editGroup']);
 Route::match(array('GET','POST'), '/new-group', ['as' => 'newgroup','uses' => 'GroupController@newGroup']);
-Route::match(array('GET','POST'), '/join-group', ['as' => 'joingroup','uses' => 'GroupController@joinGroup']);
+Route::match(array('GET','POST'), '/join-group', ['as' => 'joinGroup','uses' => 'GroupController@joinGroup']);
 
 /** Events */
 Route::match(array('GET','POST'), '/join-event', ['as' => 'joinEvent', 'uses' => 'EventController@joinEvent']);
@@ -27,6 +28,7 @@ Route::get('/editevent/{id}', ['as' => 'editEvent', 'uses' => 'EventController@e
 
 /** chat room */
 Route::get('/chat/{roomId}', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
+Route::get('/services/chat/{roomId}/messages/{since?}', ['as' => 'chatService', 'uses' => 'ChatServiceController@getMessages']);
 
 Route::match(array('GET','POST'), '/process-group',['as' => 'processGroup', 'uses' => 'GroupController@processGroup']);
 Route::match(array('GET', 'POST'), '/group/{gid}/new-event',['as' => 'newEvent', 'uses' => 'EventController@newEvent']);

@@ -28,17 +28,20 @@ class GroupController extends SiteController {
             //process form
             $lastAction = $request->session()->get('lastAction');
             $groupName = $request->input('groupname') ? : $request->session()->get('newgroup:groupName');
-            //$invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
+            $invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
 
             $groupObj = new ParseObject('Groups');
             $groupObj->set('name', $groupName);
             $groupObj->set('user', $current_user);
-            /*if (empty($invites)) {
+            if (empty($invites)) {
                 $invites = [];
             }
-            $groupObj->setArray('invites', $invites);*/
+            $groupObj->setArray('invites', $invites);
             $groupObj->set('inviteCode', $this->generate_random_letters(6));
             try {
+                $groupObj->save();
+                $relation = $groupObj->getRelation('members');
+                $relation->add($current_user);
                 $groupObj->save();
                 return redirect()->route('editgroup', ['id' => $groupObj->getObjectId()]);
             }
@@ -58,9 +61,63 @@ class GroupController extends SiteController {
 
     public function joinGroup(Request $request) {
 
+        $current_user = ParseUser::getCurrentUser();
+
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
+
+        if ($request->method() == "POST" || $request->session()->get('lastAction') == 'joingroup')
+        {
+            if (!empty($current_user))
+            {
+                $code = $request->input('inviteCode') ? : $request->session()->get('joingroup:inviteCode');
+                $query = new ParseQuery("Groups");
+                try {
+                    $query->equalTo('inviteCode', $code);
+                    $groupObj = $query->find();
+                    if (count($groupObj) > 0)
+                    {
+                        $groupObj = $groupObj[0];
+                        $relation = $groupObj->getRelation('members');
+                        $relation->add($current_user);
+                        $groupObj->save();
+
+                        //add member to chatroom
+                        $relation = $groupObj->getRelation("events");
+                        $query = $relation->getQuery();
+                        $events = $query->find();
+                        foreach($events as $eventObj)
+                        {
+                            $chatObj = $eventObj->get('chatRoom');
+                            $relation = $chatObj->getRelation('members');
+                            $relation->add($current_user);
+                            $chatObj->save();
+                        }
+                        //clear last action
+                        $request->session()->set('lastAction', '');
+                        //redirect to chatroom
+                        return redirect()->route('groupView', ['id' => $groupObj->getObjectId()]);
+                    }
+                    else
+                    {
+                        $renderData['errorMsg'] = "Sorry invite code '{$code}' is not valid.'";
+                    }
+                } catch (ParseException $ex) {
+                    // The object was not retrieved successfully.
+                    // error is a ParseException with an error code and message.
+                    echo $ex->getMessage();
+                }
+            }
+            else
+            {
+                $request->session()->set('lastAction', 'joingroup');
+                $request->session()->set('joingroup:inviteCode', $request->input('inviteCode'));
+                return redirect()->route('register');
+            }
+        }
+
+        $renderData['navTitle'] = 'Join Group';
         return view('joingroup', $renderData);
     }
 
@@ -104,7 +161,7 @@ class GroupController extends SiteController {
         }
 
         //find events that this user maybe a member of
-        $query = new ParseQuery("Events");
+        /*$query = new ParseQuery("Events");
         $query ->equalTo('members', $current_user);
         $query->includeKey('group');
         $events = $query->find();
@@ -123,7 +180,7 @@ class GroupController extends SiteController {
 
                 $dGroups[$tgroup->getObjectId()] = $temp;
             }
-        }
+        }*/
 
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
@@ -133,6 +190,37 @@ class GroupController extends SiteController {
         $renderData['dGroups'] = $dGroups;
 
         return view('groups', $renderData);
+    }
+
+    public function showGroupView($groupid, Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            return redirect()->route('login');
+        }
+
+        Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
+        $query = new ParseQuery("Groups");
+        try {
+            $group = $query->get($groupid);
+            // get events
+            $relation = $group->getRelation("events");
+            $query = $relation->getQuery();
+            $events = $query->find();
+
+            $renderData = $this->getRenderData($request);
+            $renderData['user'] = $current_user;
+            $renderData['group'] = $group;
+            $renderData['events'] = $events;
+            $renderData['navTitle'] = $group->get('name');
+            return view('groupview', $renderData);
+
+        } catch (ParseException $ex) {
+            // The object was not retrieved successfully.
+            // error is a ParseException with an error code and message.
+            echo $ex->getMessage();
+        }
     }
 
     public function editGroup($groupid, Request $request) {

@@ -19,6 +19,7 @@ class SiteController extends Controller {
         Html\Assets::addLink(Html\Link::Css('/vendor/responsive-calendar/0.9/css/responsive-calendar.css'));
         Html\Assets::addLink(Html\Link::Css('/vendor/font-awesome/4.4.0/css/font-awesome.min.css'));
         Html\Assets::addLink(Html\Link::Script('/vendor/jquery/1.11.1/jquery.min.js'));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/loading.js')));
         Html\Assets::addLink(Html\Link::Script('/vendor/bootstrap/3.3.5/js/bootstrap.min.js'));
         Html\Assets::addLink(Html\Link::Script('/vendor/responsive-calendar/0.9/js/responsive-calendar.min.js'));
         Html\Assets::addLink(Html\Link::Script(elixir('scripts/footer.js')));

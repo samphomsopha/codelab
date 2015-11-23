@@ -21,7 +21,7 @@
     <div class="row card card-b">
         <div class="col-xs-12 padding-zero">
             <div class="group-name">
-                <a href="{{route('groupView', ['id' => $dt['gropu']->getObjectId()])}}"><i class="fa fa-users"></i> {{$dt['group']->get('name')}}</a>
+                <a href="{{route('groupView', ['id' => $dt['group']->getObjectId()])}}"><i class="fa fa-users"></i> {{$dt['group']->get('name')}}</a>
                 <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}"><span class="ft-right"></ap><i class="fa fa-comments-o"></i> {{$dt['event']->get('name')}}</span></a>
             </div>
         </div>
@@ -35,8 +35,11 @@
                     </div>
                     <div class="text">
                         <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}">
-                            <p>{{$dt['message']->get('message')}}</p>
-                            <span class="timestamp">{{$dt['message']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</span>
+                            <p>{{$dt['message']['msg']->get('message')}}</p>
+                            @foreach($dt['message']['assets'] as $assetObj)
+                                <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                            @endforeach
+                            <span class="timestamp">{{$dt['message']['msg']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</span>
                         </a>
                     </div>
                 </div>

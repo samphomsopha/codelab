@@ -12,15 +12,18 @@
         </div>
     </div>
     <div class="row card card-b">
-        <form id="chat-frm" action="/file-upload" class="dropzone" method="post" enctype="multipart/form-data">
+        <form id="chatfrm" action="/chat/upload" class="mydropzone" method="post" enctype="multipart/form-data">
             {!! Form::token() !!}
+            <input type="hidden" name="chat_id" value="{{$chatObj->getObjectId()}}"/>
             <div class="form-group">
                 <div class="col-xs-11">
                     <textarea name="message" class="form-control" id="message">{{$message}}</textarea>
-                    <input type="file" name="file" multiple/>
+                    <div class="dz-message needsclick">
+                        Drop files here or click to upload.<br>
+                    </div>
                 </div>
                 <div class="col-xs-1">
-                    <button class="btn"><i class="fa fa-paper-plane"></i></button>
+                    <button class="btn send"><i class="fa fa-paper-plane"></i></button>
                 </div>
             </div>
         </form>

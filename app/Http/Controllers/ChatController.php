@@ -33,6 +33,14 @@ class ChatController extends SiteController {
             $query->addAscending('createdAt');
             $messages = $query->find();
 
+            $msArr = [];
+            foreach($messages as $messageObj)
+            {
+                $relation = $messageObj->getRelation('asset');
+                $qry = $relation->getQuery();
+                $assets = $qry->find();
+                $msArr[] = ['message' => $messageObj, 'assets' => $assets];
+            }
             $renderData = $this->getRenderData($request);
             if (count($messages) > 0) {
                 $last_message = $messages[count($messages)-1];
@@ -47,7 +55,7 @@ class ChatController extends SiteController {
 
             $renderData['user'] = $current_user;
             $renderData['chatObj'] = $chatObj;
-            $renderData['messages'] = $messages;
+            $renderData['messages'] = $msArr;
             $renderData['navTitle'] = $chatObj->get('name');
             $renderData['user'] = $current_user;
 
@@ -69,10 +77,11 @@ class ChatController extends SiteController {
         }
 
         $message = $request->input('msg');
-
+        Html\Assets::addLink(Html\Link::Css('/vendor/dropzone/dropzone.css'));
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addLink(Html\Link::Script('//www.parsecdn.com/js/parse-1.6.7.min.js'));
         Html\Assets::addLink(Html\Link::Script('/vendor/dropzone/dropzone.js'));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/chatUploader.js')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $query = new ParseQuery("ChatRoom");
         $chatObj = $query->get($roomId);

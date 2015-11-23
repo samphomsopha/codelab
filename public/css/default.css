@@ -173,6 +173,9 @@ h6 {
   color: inherit;
   text-decoration: none;
 }
+.content .card-b .message img {
+  image-orientation: from-image;
+}
 .content .card-b .title {
   font-family: inherit;
   font-size: 20px;
@@ -241,6 +244,18 @@ h6 {
 .content .placeholder #invite {
   width: 80%;
   display: inline-block;
+}
+.mydropzone {
+  border: none;
+}
+.mydropzone .dz-message {
+  margin-top: 5px;
+  border: 2px dashed #0087F7;
+  border-radius: 5px;
+  background: white;
+  min-height: 100px;
+  text-align: center;
+  font-size: 22px;
 }
 .zero-padding {
   padding-left: 0;

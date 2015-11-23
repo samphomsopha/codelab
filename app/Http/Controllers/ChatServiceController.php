@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Parse\ParseUser;
 use Parse\ParseQuery;
 use Parse\ParseClient;
+use Parse\ParseFile;
+use Parse\ParseObject;
+use Symfony\Component\Yaml\Exception\ParseException;
 
 class ChatServiceController extends Controller {
     private function init() {
@@ -14,6 +17,124 @@ class ChatServiceController extends Controller {
         ParseClient::initialize( config('parse.app_id'), config('parse.api_key'), config('parse.master_key'));
     }
 
+    public function newMessage(Request $request) {
+        $this->init();
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            $ret = [
+                'status' => 'fail',
+                'error' => "login required"
+            ];
+            return json_encode($ret);
+        }
+        $message = $request->input("message");
+        $chat_id = $request->input("chat_id");
+        $assets = $request->input("assets");
+
+        if (!empty($message)) {
+            try {
+                $messageObj = new ParseObject("Messages");
+                $query = new ParseQuery("ChatRoom");
+                $chatRoom = $query->get($chat_id);
+                $messageObj->set("message", $message);
+                $messageObj->set("user", $current_user);
+                $messageObj->set("chatRoom", $chatRoom);
+                $messageObj->save();
+
+                $relation = $chatRoom->getRelation("messages");
+                $relation->add($messageObj);
+                $chatRoom->save();
+                if (!empty($assets))
+                {
+                    $mrelation = $messageObj->getRelation("asset");
+                    $crelation = $chatRoom->getRelation("assets");
+                    foreach($assets as $asset_id)
+                    {
+                        $assetQry = new ParseQuery("Assets");
+                        $assetObj = $assetQry->get($asset_id);
+                        $mrelation->add($assetObj);
+                        $crelation->add($assetObj);
+                    }
+                    $chatRoom->save();
+                }
+                $messageObj->save();
+                $ret = [
+                    'status' => "success",
+                    'data' => [
+                        'object' => "messages",
+                        'id' => $messageObj->getObjectId(),
+                        'message' => $messageObj->get("message")
+                    ]
+                ];
+
+                return response(json_encode($ret))
+                    ->header('Content-Type', 'text/json');
+
+            } catch (ParseException $ex) {
+                $ret = [
+                    'status' => 'fail',
+                    'error' => $ex->getMessage()
+                ];
+                return response(json_encode($ret))
+                    ->header('Content-Type', 'text/json');
+            }
+        }
+    }
+
+    public function upload(Request $request) {
+        $this->init();
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            $ret = [
+                'status' => 'fail',
+                'error' => "login required"
+            ];
+            return json_encode($ret);
+        }
+        if ( isset( $_FILES['file'] ) ) {
+            $chatRoomId = $request->input('chat_id');
+            // save file to Parse
+            try {
+                $file = ParseFile::createFromData( file_get_contents( $_FILES['file']['tmp_name'] ), $_FILES['file']['name']  );
+                $file->save();
+
+                // save something to class TestObject
+                $asset = new ParseObject( "Assets" );
+                $asset->set( "foo", "bar" );
+                // add the file we saved above
+                $asset->set( "file", $file );
+                $asset->save();
+
+                $ret = [
+                    'status' => 'success',
+                    'data' => [
+                        'asset' => ['id' => $asset->getObjectId()],
+                        'file' => ['url' => $file->getUrl()]
+                    ]
+                ];
+                return response(json_encode($ret))
+                    ->header('Content-Type', 'text/json');
+
+            } catch (ParseException $ex) {
+                $ret = [
+                    'status' => 'fail',
+                    'error' => $ex->getMessage()
+                ];
+                return response(json_encode($ret))
+                    ->header('Content-Type', 'text/json');
+            }
+
+        } else {
+            $ret = [
+                'status' => 'fail',
+                'error' => 'no file selected'
+            ];
+            return response(json_encode($ret))
+                ->header('Content-Type', 'text/json');
+        }
+    }
     public function getMessages($chatRoomId, $lastMsgId = null, $lastTime = null, Request $request) {
 
         $this->init();

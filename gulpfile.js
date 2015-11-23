@@ -21,5 +21,6 @@ elixir(function(mix) {
         'scripts/newgroup.js',
         'scripts/footer.js',
         'scripts/newevent.js',
-        'scripts/chat.js']);
+        'scripts/chat.js',
+        'scripts/chatUploader.js']);
 });

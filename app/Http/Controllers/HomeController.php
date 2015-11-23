@@ -48,11 +48,14 @@ class HomeController extends SiteController {
                 $evQuery->includeKey('group');
                 $event = $evQuery->get($event->getObjectId());
                 $group = $event->get('group');
+                $relation = $message->getRelation("asset");
+                $aqry = $relation->getQuery();
+                $assets = $aqry->find();
                 $temp = [
                     'group' => $group,
                     'event' => $event,
                     'chatRoom' => $chatRoom,
-                    'message' => $message,
+                    'message' => ['msg' => $message, 'assets' => $assets],
                     'user' => $message->get('user'),
                 ];
                 $data[] = $temp;

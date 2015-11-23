@@ -17,11 +17,14 @@
                 <div class="message">
                     <div class="row">
                         <div class="profile-img">
-                            <img src="/img/profile.png"/> {{$messageObj->get('user')->get('name')}}
+                            <img src="/img/profile.png"/> {{$messageObj['message']->get('user')->get('name')}}
                         </div>
                         <div class="text">
-                            <p>{{$messageObj->get('message')}}</p>
-                            <p class="timestamp">{{$messageObj->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</p>
+                            <p>{{$messageObj['message']->get('message')}}</p>
+                            @foreach($messageObj['assets'] as $assetObj)
+                                <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                            @endforeach
+                            <p class="timestamp">{{$messageObj['message']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</p>
                         </div>
                     </div>
                 </div>

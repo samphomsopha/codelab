@@ -32,16 +32,24 @@ class ChatController extends SiteController {
             $query->includeKey('user');
             $query->addAscending('createdAt');
             $messages = $query->find();
-            $last_message = $messages[count($messages)-1];
 
             $renderData = $this->getRenderData($request);
+            if (count(count($messages) > 0)) {
+                $last_message = $messages[count($messages)-1];
+                $renderData['last_timer'] = $last_message->getCreatedAt()->getTimestamp();
+            } else {
+                $renderData['last_timer'] = 0;
+            }
+
+
+
             $renderData['user'] = $current_user;
             $renderData['chatObj'] = $chatObj;
             $renderData['messages'] = $messages;
             $renderData['navTitle'] = $chatObj->get('name');
             $renderData['user'] = $current_user;
             $renderData['lastMsgId'] = $messages[count($messages)-1]->getObjectId();
-            $renderData['last_timer'] = $last_message->getCreatedAt()->getTimestamp();
+
             $renderData['uId'] = $current_user->getObjectId();
             return view('chat', $renderData);
 

@@ -97,6 +97,7 @@ class ChatServiceController extends Controller {
             $chatRoomId = $request->input('chat_id');
             // save file to Parse
             try {
+                var_dump($_FILES);die();
                 $file = ParseFile::createFromData( file_get_contents( $_FILES['image']['tmp_name'] ), $_FILES['image']['name']  );
                 $file->save();
 

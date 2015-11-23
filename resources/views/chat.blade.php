@@ -28,22 +28,29 @@
             </div>
         </div>
     @endforeach
-    <div class="row">
+    <div class="row spacer">
         <div class="col-xs-12">
             <div class="spacer-chat"></div>
         </div>
     </div>
     <div class="row card card-b message-entry">
-        <div class="col-xs-12">
-                <form method="post" enctype="multipart/form-data">
-                    {!! Form::token() !!}
-                    <div class="form-group">
-                        <input type="text" name="message" class="form-control" id="name" placeholder="Type message">
-                    </div>
-                </form>
-        </div>
+        <form id="chat-frm" method="post" enctype="multipart/form-data">
+            {!! Form::token() !!}
+            <div class="form-group">
+                <div class="col-xs-11">
+                    <textarea name="message" class="form-control" id="message"></textarea>
+                </div>
+                <div class="col-xs-1">
+                    <button class="btn fupload"><i class="fa fa-picture-o"></i></button>
+                    <button class="btn"><i class="fa fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </form>
     </div>
     <script type="text/javascript">
         var chat_id = "{{$chatObj->getObjectId()}}";
+        var last_timer = "{{$last_timer}}";
+        var lastMsgId = "{{$lastMsgId}}";
+        var PU = "{{$uId}}";
     </script>
 @stop

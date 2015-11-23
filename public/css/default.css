@@ -180,7 +180,11 @@ h6 {
 .content .message-entry {
   position: fixed;
   bottom: 45px;
-  width: 100%;
+  right: 0;
+  left: 0;
+}
+.content .message-entry .col-xs-1 {
+  padding-left: 0;
 }
 .content .placeholder {
   padding: 20px;
@@ -238,6 +242,10 @@ h6 {
   width: 80%;
   display: inline-block;
 }
+.zero-padding {
+  padding-left: 0;
+  padding-right: 0;
+}
 .video-container {
   position: relative;
   padding-bottom: 56.25%;
@@ -255,7 +263,7 @@ h6 {
   height: 100%;
 }
 .spacer {
-  height: 75px;
+  height: 155px;
   width: 100%;
 }
 .spacer-chat {

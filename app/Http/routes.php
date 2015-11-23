@@ -28,7 +28,8 @@ Route::get('/editevent/{id}', ['as' => 'editEvent', 'uses' => 'EventController@e
 
 /** chat room */
 Route::get('/chat/{roomId}', ['as' => 'chat', 'uses' => 'ChatController@showChat']);
-Route::get('/services/chat/{roomId}/messages/{since?}', ['as' => 'chatService', 'uses' => 'ChatServiceController@getMessages']);
+Route::get('/services/chat/{roomId}/messages/{messageId}/{since}', ['as' => 'chatService', 'uses' => 'ChatServiceController@getMessages']);
+Route::get('/chat/upload/{roomId}', ['as' => 'chatUpload', 'uses' => 'ChatController@showUploader']);
 
 Route::match(array('GET','POST'), '/process-group',['as' => 'processGroup', 'uses' => 'GroupController@processGroup']);
 Route::match(array('GET', 'POST'), '/group/{gid}/new-event',['as' => 'newEvent', 'uses' => 'EventController@newEvent']);

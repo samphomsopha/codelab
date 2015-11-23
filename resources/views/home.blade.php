@@ -27,11 +27,12 @@
         </div>
         <div class="col-xs-12">
             <div class="message">
-                <a href="/chat">
                 <div class="row">
                     <div class="profile-img">
-                        <img src="/img/profile.png"/>
-                        {{$dt['user']->get('name')}}
+                        <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}">
+                            <img src="/img/profile.png"/>
+                            {{$dt['user']->get('name')}}
+                        </a>
                     </div>
                     <div class="text">
                         <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}">
@@ -43,7 +44,6 @@
                         </a>
                     </div>
                 </div>
-                </a>
             </div>
         </div>
     </div>

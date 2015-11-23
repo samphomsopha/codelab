@@ -16,17 +16,18 @@
             {!! Form::token() !!}
             <input type="hidden" name="chat_id" value="{{$chatObj->getObjectId()}}"/>
             <div class="form-group">
-                <div class="col-xs-11">
+                <div class="col-xs-10 col-xs-offset-1">
                     <textarea name="message" class="form-control" id="message">{{$message}}</textarea>
-                    <div class="dz-message needsclick">
+                    <div id="uploadctn" class="dz-message needsclick">
                         Drop files here or click to upload.<br>
                     </div>
                 </div>
-                <div class="col-xs-1">
-                    <button class="btn send"><i class="fa fa-paper-plane"></i></button>
-                </div>
+            </div>
+            <div class="col-xs-2 col-xs-offset-9">
+                <button class="btn send"><i class="fa fa-paper-plane"></i></button>
             </div>
         </form>
+
     </div>
     <script type="text/javascript">
         var chat_id = "{{$chatObj->getObjectId()}}";

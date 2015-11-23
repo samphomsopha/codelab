@@ -247,6 +247,7 @@ h6 {
 }
 .mydropzone {
   border: none;
+  padding: 10px;
 }
 .mydropzone .dz-message {
   margin-top: 5px;

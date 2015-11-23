@@ -1,6 +1,8 @@
 $(function($){
     var assets = [];
-    var myDropzone = new Dropzone("#chatfrm", { url: "/chat/upload"});
+    var myDropzone = new Dropzone("#chatfrm", {
+        url: "/chat/upload",
+        previewsContainer: '#uploadctn'});
     myDropzone.on("sending", function(file){
         $('.send').prop('disabled', true);
     });

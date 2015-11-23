@@ -8,9 +8,7 @@ $(function ($) {
             url = '/services/chat/'+chat_id+'/messages/'+lastMsgId+'/'+last_timer;
             $.get( url, function(data) {
                     if (data.status == "success") {
-                        console.log(data);
                         $.each(data.data, function(key, val) {
-                            console.log(val);
                             insert = '<div class="row card card-b">' +
                             '<div class="col-xs-12">' +
                             '<div class="message">' +

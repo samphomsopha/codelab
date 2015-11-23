@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-xs-1">
                     <button class="btn fupload"><i class="fa fa-picture-o"></i></button>
-                    <button class="btn"><i class="fa fa-paper-plane"></i></button>
+                    <button type="submit" class="btn"><i class="fa fa-paper-plane"></i></button>
                 </div>
             </div>
         </form>

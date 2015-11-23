@@ -61,6 +61,7 @@ class EventController extends SiteController {
                     //-- create chat room --//
                     $chatObj = new ParseObject('ChatRoom');
                     $chatObj->set('name', $eventObj->get('name'));
+                    $chatObj->set('event', $eventObj);
                     $chatObj->save();
                     $relation = $chatObj->getRelation('members');
                     $relation->add($current_user);

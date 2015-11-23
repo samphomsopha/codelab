@@ -21,8 +21,8 @@
     <div class="row card card-b">
         <div class="col-xs-12 padding-zero">
             <div class="group-name">
-                <a href="/group"><i class="fa fa-users"></i> {{$dt['group']->get('name')}}</a>
-                <a href="/chat"><span class="ft-right"></ap><i class="fa fa-comments-o"></i> {{$dt['event']->get('name')}}</span></a>
+                <a href="{{route('groupView', ['id' => $dt['gropu']->getObjectId()])}}"><i class="fa fa-users"></i> {{$dt['group']->get('name')}}</a>
+                <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}"><span class="ft-right"></ap><i class="fa fa-comments-o"></i> {{$dt['event']->get('name')}}</span></a>
             </div>
         </div>
         <div class="col-xs-12">
@@ -34,8 +34,10 @@
                         {{$dt['user']->get('name')}}
                     </div>
                     <div class="text">
-                        <p>{{$dt['message']->get('message')}}</p>
-                        <span class="timestamp">{{$dt['message']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</span>
+                        <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}">
+                            <p>{{$dt['message']->get('message')}}</p>
+                            <span class="timestamp">{{$dt['message']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</span>
+                        </a>
                     </div>
                 </div>
                 </a>

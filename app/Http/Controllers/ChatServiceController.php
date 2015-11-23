@@ -93,11 +93,11 @@ class ChatServiceController extends Controller {
             ];
             return json_encode($ret);
         }
-        if ( isset( $_FILES['file'] ) ) {
+        if ( isset( $_FILES['image'] ) ) {
             $chatRoomId = $request->input('chat_id');
             // save file to Parse
             try {
-                $file = ParseFile::createFromData( file_get_contents( $_FILES['file']['tmp_name'] ), $_FILES['file']['name']  );
+                $file = ParseFile::createFromData( file_get_contents( $_FILES['image']['tmp_name'] ), $_FILES['image']['name']  );
                 $file->save();
 
                 // save something to class TestObject

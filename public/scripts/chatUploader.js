@@ -2,6 +2,7 @@ $(function($){
     var assets = [];
     var myDropzone = new Dropzone("#chatfrm", {
         url: "/chat/upload",
+        paramName: 'image',
         previewsContainer: '#uploadctn'});
     myDropzone.on("sending", function(file){
         $('.send').prop('disabled', true);

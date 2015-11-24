@@ -141,7 +141,8 @@ class GroupController extends SiteController {
             return redirect()->route('login');
         }
         $query = new ParseQuery("Groups");
-        $query->equalTo('user', $current_user);
+        //$query->equalTo('user', $current_user);
+        $query->equalTo('members', $current_user);
         $groups = $query->find();
         $dGroups = array();
         foreach($groups as $group)

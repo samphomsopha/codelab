@@ -9,7 +9,10 @@
                 </div>
                 @foreach($groupData['events'] as $event)
                     <div class="event-name">
-                        <i class="fa fa-comments-o"></i> <a href="{{route('chat', ['roomId' => $event->get('chatRoom')->getObjectId()])}}">{{$event->get('name')}}</a> <a href="{{route('editEvent', ['id' => $event->getObjectId()])}}">[edit]</a>
+                        <i class="fa fa-comments-o"></i> <a href="{{route('chat', ['roomId' => $event->get('chatRoom')->getObjectId()])}}">{{$event->get('name')}}</a>
+                        @if ($user->getObjectId() == $event->get('user')->getObjectId())
+                            <a href="{{route('editEvent', ['id' => $event->getObjectId()])}}">[edit]</a>
+                        @endif
                         <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
                     </div>
                 @endforeach

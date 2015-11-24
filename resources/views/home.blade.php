@@ -26,7 +26,11 @@
                         <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}">
                             <p>{{$dt['message']['msg']->get('message')}}</p>
                             @foreach($dt['message']['assets'] as $assetObj)
-                                <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                                @if (in_array(substr($assetObj->get('file')->getUrl(),strrpos($assetObj->get('file')->getUrl(), '.')+1), ['jpg','jpeg','gif','png']))
+                                    <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                                @else
+                                    <a class="download-asset" href="{{$assetObj->get('file')->getUrl()}}"><i class="fa fa-download">{{substr($assetObj->get('file')->getName(),strrpos($assetObj->get('file')->getName(), '-')+1)}}</i></a>
+                                @endif
                             @endforeach
                             <span class="timestamp">{{$dt['message']['msg']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</span>
                         </a>

@@ -181,6 +181,10 @@ h6 {
 .content .card-b .message img {
   image-orientation: from-image;
 }
+.content .card-b .download-asset {
+  font-size: 20px;
+  display: block;
+}
 .content .card-b .control {
   float: left;
 }

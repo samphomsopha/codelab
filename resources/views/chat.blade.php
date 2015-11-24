@@ -27,7 +27,11 @@
                         <div class="text">
                             <p>{{$messageObj['message']->get('message')}}</p>
                             @foreach($messageObj['assets'] as $assetObj)
-                                <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                                @if (in_array(substr($assetObj->get('file')->getUrl(),strrpos($assetObj->get('file')->getUrl(), '.')+1), ['jpg','jpeg','gif','png']))
+                                    <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
+                                @else
+                                    <a class="download-asset" href="{{$assetObj->get('file')->getUrl()}}"><i class="fa fa-download">{{substr($assetObj->get('file')->getName(),strrpos($assetObj->get('file')->getName(), '-')+1)}}</i></a>
+                                @endif
                             @endforeach
                             @if($user->getObjectId() == $messageObj['message']->get('user')->getObjectId())
                                 <p class="control"><button class="btn btn-delete-msg" data-id="{{$messageObj['message']->getObjectId()}}">delete</button></p>

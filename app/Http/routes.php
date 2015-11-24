@@ -33,6 +33,8 @@ Route::get('/chat/upload/{roomId}', ['as' => 'chatUpload', 'uses' => 'ChatContro
 Route::post('/chat/upload', ['as' => 'chatUploadHandle', 'uses' => 'ChatServiceController@upload']);
 Route::post('/chat/message', ['as' => 'chatNewMessage', 'uses' => 'ChatServiceController@newMessage']);
 
+/** messages */
+Route::get('/services/message/{id}/delete', ['as' => 'messageDelete', 'uses' => 'ChatServiceController@deleteMessage']);
 
 Route::match(array('GET','POST'), '/process-group',['as' => 'processGroup', 'uses' => 'GroupController@processGroup']);
 Route::match(array('GET', 'POST'), '/group/{gid}/new-event',['as' => 'newEvent', 'uses' => 'EventController@newEvent']);

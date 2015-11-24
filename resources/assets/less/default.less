@@ -2,6 +2,7 @@
 
 body {
   font-family: 'Source Sans Pro', san-serif;
+  font-size: 18px;
   background-color: rgb(233, 234, 237);
   .content {
     padding-left: 0px;
@@ -30,7 +31,7 @@ h6 {
 .nav-title {
   margin-top: 2px;
   margin-bottom: 2px;
-  font-size: 16px;
+  font-size: 22px;
 }
 .centered {
   margin: auto;
@@ -60,7 +61,7 @@ h6 {
 }
 
 .msg {
-  font-size: 16px;
+  font-size: 20px;
   font-family: inherit;
 }
 
@@ -152,9 +153,10 @@ h6 {
     .group-name {
       width: 100%;
       display: block;
-      font-size: 16px;
+      font-size: 20px;
     }
     .event-name {
+      font-size: 20px;
       .timestamp {
         float: right;
         color:@light-blue;
@@ -183,6 +185,7 @@ h6 {
       }
       .text {
         float: left;
+        margin-top: 10px;
         width: 100%;
         .timestamp {
           float: right;
@@ -197,9 +200,15 @@ h6 {
         image-orientation: from-image;
       }
     }
+    .control {
+      float:left;
+      .btn-delete-msg {
+        padding: 2px;
+      }
+    }
     .title {
       font-family: inherit;
-      font-size: 20px;
+      font-size: 24px;
     }
   }
 

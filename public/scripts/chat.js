@@ -38,6 +38,18 @@ $(function ($) {
         window.location.replace('/chat/upload/'+chat_id+'/?msg='+$("#message").val());
     });
 
+    $(".container").on('click', '.btn-delete-msg', function(e) {
+        e.preventDefault();
+        var url = '/services/message/'+$(this).attr('data-id')+'/delete';
+        $.get( url, function(data) {
+            if (data.status == "success") {
+                console.log(data);
+                window.test = e;
+                $(e.target).closest('.card-b').remove();
+            }
+        });
+    });
+
     $("#chat-frm").submit(function(e) {
         e.preventDefault();
         var message = $("#message").val();

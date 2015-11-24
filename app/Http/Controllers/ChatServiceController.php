@@ -17,6 +17,39 @@ class ChatServiceController extends Controller {
         ParseClient::initialize( config('parse.app_id'), config('parse.api_key'), config('parse.master_key'));
     }
 
+    public function deleteMessage($id, Request $request) {
+        $this->init();
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            $ret = [
+                'status' => 'fail',
+                'error' => "login required"
+            ];
+            return json_encode($ret);
+        }
+
+        $query = new ParseQuery("Messages");
+        try {
+            $messageObj = $query->get($id);
+            $messageObj->destroy();
+
+            $ret = [
+                'status' => 'success'
+            ];
+            return response(json_encode($ret))
+                ->header('Content-Type', 'text/json');
+
+        } catch (ParseException $ex) {
+            $ret = [
+                'status' => 'fail',
+                'error' => $ex->getMessage()
+            ];
+            return response(json_encode($ret))
+                ->header('Content-Type', 'text/json');
+        }
+    }
+
     public function newMessage(Request $request) {
         $this->init();
         $current_user = ParseUser::getCurrentUser();

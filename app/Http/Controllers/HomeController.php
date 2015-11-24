@@ -79,7 +79,10 @@ class HomeController extends SiteController {
         {
             return redirect()->route('login');
         }
+
+        Html\Assets::addLink(Html\Link::Css('/vendor/responsive-calendar/0.9/css/responsive-calendar.css'));
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addLink(Html\Link::Script('/vendor/responsive-calendar/0.9/js/responsive-calendar.min.js'));
         Html\Assets::addLink(Html\Link::Script(elixir('scripts/calendar.js')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);

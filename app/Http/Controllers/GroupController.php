@@ -140,6 +140,10 @@ class GroupController extends SiteController {
         {
             return redirect()->route('login');
         }
+
+        $query = ParseUser::query();
+        $current_user = $query->get($current_user->getObjectId());
+
         $query = new ParseQuery("Groups");
         //$query->equalTo('user', $current_user);
         $query->equalTo('members', $current_user);
@@ -199,6 +203,8 @@ class GroupController extends SiteController {
         {
             return redirect()->route('login');
         }
+        $query = ParseUser::query();
+        $current_user = $query->get($current_user->getObjectId());
 
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
@@ -230,6 +236,9 @@ class GroupController extends SiteController {
         {
             return redirect()->route('login');
         }
+        $query = ParseUser::query();
+        $current_user = $query->get($current_user->getObjectId());
+        
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $query = new ParseQuery("Groups");

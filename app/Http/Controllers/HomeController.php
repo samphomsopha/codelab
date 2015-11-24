@@ -24,6 +24,9 @@ class HomeController extends SiteController {
         {
             return redirect()->route('login');
         }
+        $query = ParseUser::query();
+        $current_user = $query->get($current_user->getObjectId());
+
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
 
@@ -79,6 +82,8 @@ class HomeController extends SiteController {
         {
             return redirect()->route('login');
         }
+        $query = ParseUser::query();
+        $current_user = $query->get($current_user->getObjectId());
 
         Html\Assets::addLink(Html\Link::Css('/vendor/responsive-calendar/0.9/css/responsive-calendar.css'));
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));

@@ -17,7 +17,12 @@
                 <div class="message">
                     <div class="row">
                         <div class="profile-img">
-                            <img src="/img/profile.png"/> {{$messageObj['message']->get('user')->get('name')}}
+                            @if (!empty($messageObj['message']->get('user')->get('image')))
+                                <img src="{{$messageObj['message']->get('user')->get('image')->getUrl()}}"/>
+                            @else
+                                <img src="/img/profile.png"/>
+                            @endif
+                            {{$messageObj['message']->get('user')->get('name')}}
                         </div>
                         <div class="text">
                             <p>{{$messageObj['message']->get('message')}}</p>

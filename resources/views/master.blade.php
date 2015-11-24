@@ -46,7 +46,7 @@
                 <li><a href="{{route('joinEvent')}}">Join Event</a></li>
                 <li>Invite Friends</li>
                 <li><a href="{{route('newgroup')}}">New Group</a></li>
-                <li>Join Group</li>
+                <li><a href="{{route('joinGroup')}}">Join Group</a></li>
             </ul>
         </li>
     </ul>

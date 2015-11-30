@@ -9,21 +9,14 @@ use Parse\ParseQuery;
 use Parse\ParseClient;
 use Parse\ParseFile;
 use Parse\ParseObject;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 class ChatServiceController extends Controller {
 
     public function deleteMessage($id, Request $request) {
         $current_user = ParseUser::getCurrentUser();
-        if (!$current_user)
-        {
-            $ret = [
-                'status' => 'fail',
-                'error' => "login required"
-            ];
-            return json_encode($ret);
-        }
-
+        //TODO Make sure user has permission to delete messages
         $query = new ParseQuery("Messages");
         try {
             $messageObj = $query->get($id);
@@ -47,14 +40,7 @@ class ChatServiceController extends Controller {
 
     public function newMessage(Request $request) {
         $current_user = ParseUser::getCurrentUser();
-        if (!$current_user)
-        {
-            $ret = [
-                'status' => 'fail',
-                'error' => "login required"
-            ];
-            return json_encode($ret);
-        }
+
         $message = $request->input("message");
         $chat_id = $request->input("chat_id");
         $assets = $request->input("assets");
@@ -106,12 +92,9 @@ class ChatServiceController extends Controller {
                 }
                 $messageObj->save();
                 $ret = [
-                    'status' => "success",
-                    'data' => [
                         'object' => "messages",
                         'id' => $messageObj->getObjectId(),
                         'message' => $messageObj->get("message")
-                    ]
                 ];
 
                 return response(json_encode($ret))
@@ -129,15 +112,6 @@ class ChatServiceController extends Controller {
     }
 
     public function upload(Request $request) {
-        $current_user = ParseUser::getCurrentUser();
-        if (!$current_user)
-        {
-            $ret = [
-                'status' => 'fail',
-                'error' => "login required"
-            ];
-            return json_encode($ret);
-        }
         if ( isset( $_FILES['image'] ) ) {
             $chatRoomId = $request->input('chat_id');
             // save file to Parse
@@ -158,16 +132,14 @@ class ChatServiceController extends Controller {
                         'file' => ['url' => $file->getUrl()]
                     ]
                 ];
-                return response(json_encode($ret))
-                    ->header('Content-Type', 'text/json');
+                return response()->json($ret);
 
             } catch (ParseException $ex) {
                 $ret = [
                     'status' => 'fail',
                     'error' => $ex->getMessage()
                 ];
-                return response(json_encode($ret))
-                    ->header('Content-Type', 'text/json');
+                return response()->json($ret);
             }
 
         } else {
@@ -175,21 +147,10 @@ class ChatServiceController extends Controller {
                 'status' => 'fail',
                 'error' => 'no file selected'
             ];
-            return response(json_encode($ret))
-                ->header('Content-Type', 'text/json');
+            return response()->json($ret);
         }
     }
     public function getMessages($chatRoomId, $lastMsgId = null, $lastTime = null, Request $request) {
-        $current_user = ParseUser::getCurrentUser();
-        if (!$current_user)
-        {
-            $ret = [
-                'status' => 'fail',
-                'error' => "login required"
-            ];
-            return json_encode($ret);
-        }
-
         $query = new ParseQuery("ChatRoom");
         try {
             $chatObj = $query->get($chatRoomId);
@@ -230,8 +191,7 @@ class ChatServiceController extends Controller {
             }
             $ret['status'] = 'success';
             $ret['data'] = $rtmsg;
-            return response(json_encode($ret))
-                    ->header('Content-Type', 'text/json');
+            return response()->json($ret);
 
         } catch (ParseException $ex) {
             // The object was not retrieved successfully.
@@ -240,8 +200,7 @@ class ChatServiceController extends Controller {
                 'status' => 'fail',
                 'error' => $ex->getMessage()
                 ];
-            return response(json_encode($ret))
-                ->header('Content-Type', 'text/json');
+            return response()->json($ret);
         }
     }
 }

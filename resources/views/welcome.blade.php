@@ -5,7 +5,7 @@
         <a href="/login">Login</a>
     </div>
     <div class="col-xs-12 text-center col-md-6 col-md-offset-3">
-        <h1><a href="/">Collabii</a></h1>
+        <a href="/"><img src="/img/logo.png" class="img-responsive img-logo"/></a>
         <div class="card">
             <h3>Welcome</h3>
             <p><a role="button" href="/new-group" class="btn btn-primary btn-width-300">Create Group</a></p>

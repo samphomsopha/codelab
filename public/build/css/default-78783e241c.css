@@ -81,6 +81,9 @@ h6 {
 .content .title {
   margin-top: 0px;
 }
+.content .img-logo {
+  margin: 0 auto;
+}
 .content .card {
   margin: 0 auto;
   padding: 10px;

@@ -15,7 +15,7 @@ class Send {
             $rt[] = $mg->sendMessage($domain, array('from'    => 'collabii@collabii.com',
                 'to'      => $to_emails,
                 'subject' => 'Collabii Invite From '.$from_user->get('name'),
-                'html'    => '<h1>Collabii</h1><p>Hi, '.$from_user->get('name').' has invited you to join a Collabii group.  Just click on the invite link below.</p><a href="http://www.collabii.com/joingroup/email/'.$code.'">Accept</a>'
+                'html'    => '<img src="http://www.collabii.com/img/logo.png" alt="Collabii"/><p>Hi, '.$from_user->get('name').' has invited you to join a Collabii group.  Just click on the invite link below.</p><a href="http://www.collabii.com/joingroup/email/'.$code.'">Accept</a>'
             ));
         }
         return $rt;

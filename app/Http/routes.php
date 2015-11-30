@@ -58,7 +58,7 @@ Route::get('/calendar/newevent/{day}', ['middleware' => ['parseinit', 'auth'], '
 Route::get('/login', ['as' => 'login', 'uses' => 'LoginController@showLogin']);
 Route::get('/logout', ['middleware' => ['parseinit', 'auth'], 'as' => 'logout', 'uses' => 'LoginController@processLogout']);
 Route::match(array('GET', 'POST'), '/process-login', ['middleware' => ['parseinit'], 'as' => 'processLogin', 'uses' => 'LoginController@processLogin']);
-Route::get('/register', ['middleware' => ['parseinit', 'auth'], 'as' => 'register', 'uses' => 'LoginController@showRegister']);
+Route::get('/register', ['middleware' => ['parseinit'], 'as' => 'register', 'uses' => 'LoginController@showRegister']);
 Route::match(array('GET', 'POST'),'/process-register', ['middleware' => ['parseinit'], 'as' => 'processRegister', 'uses' => 'LoginController@processRegister']);
 Route::get('/fblogin', ['middleware' => ['parseinit'], 'uses' => 'LoginController@processFBLogin']);
 

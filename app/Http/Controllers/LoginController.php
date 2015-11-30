@@ -22,7 +22,7 @@ class LoginController extends SiteController {
         $fb = new Facebook(['app_id' => config('facebook.app_id'), 'app_secret' => config('facebook.app_secret'), 'default_graph_version' => 'v2.2']);
         $helper = $fb->getRedirectLoginHelper();
         $renderData['fb_login_url'] = $helper->getLoginUrl($redirect_url, $permissions);
-        $renderData['msg'] = '';
+        $renderData['msg'] = $request->session()->get('message') ? : '';
         $renderData['activeTab'] = 'login';
         return view('login', $renderData);
     }
@@ -35,7 +35,7 @@ class LoginController extends SiteController {
         $permissions = ['email'];
         $fb = new Facebook(['app_id' => config('facebook.app_id'), 'app_secret' => config('facebook.app_secret'), 'default_graph_version' => 'v2.2']);
         $helper = $fb->getRedirectLoginHelper();
-        $renderData['msg'] = '';
+        $renderData['msg'] = $request->session()->get('message') ? : '';
         $renderData['activeTab'] = 'signup';
         $renderData['fb_login_url'] = $helper->getLoginUrl($redirect_url, $permissions);
         return view('login', $renderData);
@@ -53,9 +53,18 @@ class LoginController extends SiteController {
         try {
             $user->signUp();
             return $this->determineRoute($request);
-        } catch (ParseException $ex) {
+        } catch (\Exception $ex) {
             // Show the error message somewhere and let the user try again.
-            echo "Error: " . $ex->getCode() . " " . $ex->getMessage();
+            if ($ex->getCode() == 101)
+            {
+                $request->session()->flash('message', "Invalid username and password.");
+            }
+            else
+            {
+                $request->session()->flash('message', $ex->getCode().":".$ex->getMessage());
+            }
+
+            return redirect('/register');
         }
     }
 
@@ -64,10 +73,18 @@ class LoginController extends SiteController {
             $user = ParseUser::logIn($request->input('username'), $request->input('password'));
             // Do stuff after successful login.
             return $this->determineRoute($request);
-        } catch (ParseException $error) {
-            // The login failed. Check error to see why.
-            echo $error->getMessage();
-            die();
+        } catch (\Exception $error) {
+            //flash message and redirect
+            if ($error->getCode() == 101)
+            {
+                $request->session()->flash('message', "Invalid username and password.");
+            }
+            else
+            {
+                $request->session()->flash('message', $error->getCode().":".$error->getMessage());
+            }
+
+            return redirect('/login');
         }
     }
 

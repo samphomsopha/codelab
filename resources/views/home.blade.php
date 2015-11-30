@@ -4,7 +4,7 @@
     @foreach($data as $dt)
         @if (!empty($dt['chatRoom']) && !empty($dt['group']))
             <div class="row card card-b">
-                <div class="col-xs-12 padding-zero">
+                <div class="col-xs-12">
                     <div class="group-name">
                         <a href="{{route('groupView', ['id' => $dt['group']->getObjectId()])}}"><i class="fa fa-users"></i> {{$dt['group']->get('name')}}</a>
                         <a href="{{route('chat', ['roomId' => $dt['chatRoom']->getObjectId()])}}"><span class="ft-right"></ap><i class="fa fa-comments-o"></i> {{$dt['event']->get('name')}}</span></a>

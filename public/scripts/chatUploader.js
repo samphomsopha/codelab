@@ -8,8 +8,7 @@ $(function($){
         $('.send').prop('disabled', true);
     });
     myDropzone.on("success", function(file, data){
-        mydata = JSON.parse(data);
-        assets.push(mydata.data.asset.id);
+        assets.push(data.data.asset.id);
         $('.send').prop('disabled', false);
     });
 
@@ -30,6 +29,7 @@ $(function($){
             url: "/chat/message",
             data: data,
             success: function(data) {
+                console.log(data);
                 if (data.status == "success") {
                     $("#message").val('');
                     window.location.replace('/chat/'+chat_id);

@@ -91,22 +91,24 @@ class ChatServiceController extends Controller {
                     }
                 }
                 $messageObj->save();
+
                 $ret = [
+                    'status' => "success",
+                    'data' => [
                         'object' => "messages",
                         'id' => $messageObj->getObjectId(),
                         'message' => $messageObj->get("message")
+                    ]
                 ];
 
-                return response(json_encode($ret))
-                    ->header('Content-Type', 'text/json');
+                return response()->json($ret);
 
             } catch (ParseException $ex) {
                 $ret = [
                     'status' => 'fail',
                     'error' => $ex->getMessage()
                 ];
-                return response(json_encode($ret))
-                    ->header('Content-Type', 'text/json');
+                return response()->json($ret);
             }
         }
     }

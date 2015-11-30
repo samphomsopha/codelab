@@ -2,7 +2,7 @@
 @section('content')
     <div class="row">
         <div class="col-xs-12 text-center col-md-6 col-md-offset-3">
-            <h1 class="title"><a href="/">Collabii</a></h1>
+            <a href="/"><img src="/img/logo.png" class="img-responsive img-logo"/></a>
             <div class="card text-center">
                 <p class="msg">{{@$msg}}</p>
                 <ul id="tabs" class="nav nav-tabs" role="tablist">

@@ -61,6 +61,9 @@ h6 {
 .ft-left {
   float: left;
 }
+.min-height {
+  min-height: 400px;
+}
 .nav li {
   text-align: center;
   width: 23%;

@@ -20,6 +20,7 @@
                 <form method="post" enctype="multipart/form-data" action="{{route('processGroup')}}">
                     {!! Form::token() !!}
                     <input type="hidden" name="reroute" value="newevents"/>
+                    <input type="hidden" name="st" value="{{$day}}"/>
                     <div class="form-group">
                         <input type="text" name="groupname" class="form-control" id="groupname" placeholder="Group Name">
                     </div>

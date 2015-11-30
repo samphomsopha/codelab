@@ -108,14 +108,7 @@ class GroupServiceController extends Controller {
                     $ddEvents[$event->get('date')->format('Y-m-d')]['dayEvents'][] = $dtemp;
                     $ddEvents[$event->get('date')->format('Y-m-d')]['number'] = !empty($ddEvents[$event->get('date')->format('Y-m-d')]['number']) ? $ddEvents[$event->get('date')->format('Y-m-d')]['number'] + 1 : 1;
                     $ddEvents[$event->get('date')->format('Y-m-d')]['badgeClass'] = "badge-warning";
-
-                    if ($ddEvents[$event->get('date')->format('Y-m-d')]['number'] == 1) {
-                        $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('chat', ['id' => $event->get('chatRoom')->getObjectId()]);
-                    }
-                    else {
-
-                        $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('calendarDayView', ['day' => $event->get('date')->format('Y-m-d')]);
-                    }
+                    $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('calendarDayView', ['day' => $event->get('date')->format('Y-m-d')]);
                 }
             }
             ksort($dGroups);

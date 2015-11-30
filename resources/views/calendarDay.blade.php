@@ -24,7 +24,7 @@
             <h4>{{$dt->format('D M j')}}</h4>
         </div>
     </div>
-    <div class="row card card-b">
+    <div class="row card card-b min-height">
     @foreach($events as $evData)
         <div class="col-xs-12 padding-zero">
             <div class="group-name">

@@ -7,7 +7,11 @@ $(function ($) {    //get here
                 events: data.data.dsEvents,
                 monthChangeAnimation: true,
                 startFromSunday: true,
-                activateNonCurrentMonths: true
+                activateNonCurrentMonths: true,
+                onDayClick: function(events) {
+                    var date = $(this).data();
+                    window.location.replace('/calendar/'+date.year+'-'+date.month+'-'+date.day);
+                }
             });
         }
     });

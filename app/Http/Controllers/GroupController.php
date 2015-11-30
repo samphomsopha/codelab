@@ -103,9 +103,9 @@ class GroupController extends SiteController {
                     $send = new Mail\Send();
                     $send->sendInviteEmail($diffInvites, $current_user, $groupObj->get('inviteCode'));
                 }
-                if ($reroute == 'newevent') {
+                if ($reroute == 'newevents') {
                     $url = route('newEvent', ['gid' => $groupObj->getObjectId()]) . '?st='.$st;
-                    return redirect()->route($url);
+                    return redirect($url);
                 } else {
                     return redirect('/groups');
                 }

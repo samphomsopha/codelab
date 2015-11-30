@@ -41,6 +41,7 @@ class EventController extends SiteController {
         $renderData['navTitle'] = 'New Event';
         $renderData['groups'] = $groups;
         $renderData['day'] = $dt->format('m/d/Y');
+        $renderData['st'] = $dt->format('Y-m-d');
         return view('newCalendarEvent', $renderData);
     }
 

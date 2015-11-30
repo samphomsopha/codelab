@@ -69,6 +69,10 @@ h6 {
   float: right;
 }
 
+.ft-left {
+  float: left;
+}
+
 .nav {
   li {
     text-align: center;
@@ -279,6 +283,31 @@ h6 {
         }
       }
     }
+
+    .members {
+      width: 90%;
+      min-height: 40px;
+      .invite-contain {
+        position: relative;
+        float: left;
+        width: auto;
+        margin-right: 10px;
+        .fa {
+          position: absolute;
+          top: -5px;
+          right: -5px;
+        }
+        .invite {
+          background-color: white;
+          /* width: 100%; */
+          width: auto;
+          float: left;
+          padding: 5px;
+          border-radius: 5px;
+        }
+      }
+    }
+
     #invite {
       width: 80%;
       display: inline-block;
@@ -337,6 +366,11 @@ h6 {
 
 .error {
   color: red;
+}
+
+.responsive-calendar .day a {
+  margin: 2%;
+  padding: 18% 0 18% 0;
 }
 
 #overlay {

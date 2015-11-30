@@ -42,4 +42,7 @@
             <!-- Responsive calendar - END -->
         </div>
     </div>
+    <script type="text/javascript">
+        var showTime = "{{$showdate->format('Y-m')}}";
+    </script>
 @stop

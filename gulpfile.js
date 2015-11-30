@@ -16,12 +16,15 @@ elixir(function(mix) {
             'default.less',
         ],
         'public/css/default.css');
-
-    mix.version(['css/default.css','scripts/login.js','scripts/calendar.js',
+    mix.less(['calendar.less'],
+            'public/css/calendar.css');
+    mix.version(['css/default.css','css/calendar.css','scripts/login.js','scripts/calendar.js',
         'scripts/newgroup.js',
         'scripts/footer.js',
         'scripts/newevent.js',
         'scripts/chat.js',
         'scripts/chatUploader.js',
-        'scripts/loading.js']);
+        'scripts/loading.js',
+        'scripts/calendarDay.js',
+        ]);
 });

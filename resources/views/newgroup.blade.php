@@ -4,7 +4,7 @@
         <div class="col-xs-12 text-center margin-top-20 col-md-6 col-md-offset-3">
             <div class="card">
                 <h1>New Group</h1>
-                <form method="post" enctype="multipart/form-data" action="{{route('processGroup')}}">
+                <form method="post" id="groupform" enctype="multipart/form-data" action="{{route('processGroup')}}">
                     {!! Form::token() !!}
                     <div class="form-group">
                         <input type="text" name="groupname" class="form-control" id="groupname" placeholder="Group Name">

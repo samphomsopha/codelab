@@ -5,7 +5,11 @@
         <div class="row card card-b">
             <div class="col-xs-12 padding-zero">
                 <div class="group-name">
-                    <i class="fa fa-users"></i> <a href="{{route('editgroup', ['id' => $groupData['group']->getObjectId()])}}">{{$groupData['group']->get('name')}}</a>
+                    @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId())
+                        <i class="fa fa-users"></i> <a href="{{route('editgroup', ['id' => $groupData['group']->getObjectId()])}}">{{$groupData['group']->get('name')}}</a>
+                    @else
+                        <i class="fa fa-users"></i>{{$groupData['group']->get('name')}}
+                    @endif
                 </div>
                 @foreach($groupData['events'] as $event)
                     <div class="event-name">
@@ -16,9 +20,11 @@
                         <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
                     </div>
                 @endforeach
+                @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId())
                 <div class="event-name">
                     <span class="ft-right"><button class="btn btn-default"><a href="{{route('newEvent',['gid' => $groupData['group']->getObjectId()])}}">New Event</a></button></span>
                 </div>
+                @endif
             </div>
         </div>
     @endforeach

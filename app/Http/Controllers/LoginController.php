@@ -42,6 +42,7 @@ class LoginController extends SiteController {
     }
 
     public function processRegister(Request $request) {
+
         $user = new ParseUser();
         $user->set("username", $request->input('email'));
         $user->set("password", $request->input('password'));
@@ -153,6 +154,7 @@ class LoginController extends SiteController {
 
     private function determineRoute(Request $request) {
         $last_action = $request->session()->get('lastAction');
+
         switch($last_action) {
             case "newgroup":
                 return redirect()->route('processGroup');

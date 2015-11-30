@@ -13,4 +13,129 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class GroupServiceController extends Controller {
 
+    public function eventsByDay($day, Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+
+        try {
+            $query = ParseUser::query();
+            $current_user = $query->get($current_user->getObjectId());
+
+            $query = new ParseQuery("Groups");
+            //$query->equalTo('user', $current_user);
+            $query->equalTo('members', $current_user);
+            $groups = $query->find();
+            $dGroups = array();
+            $ddEvents = array();
+            foreach($groups as $group)
+            {
+                $temp = array();
+                $relation = $group->getRelation("events");
+                $query = $relation->getQuery();
+
+                $dt = new \DateTime('now');
+                //$dt->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+                $tm = strtotime($day);
+                $dt->setTimestamp($tm);
+
+                $query->equalTo('date', $dt);
+                //$query->addAscending('date');
+                $events = $query->find();
+                foreach($events as $event)
+                {
+                    $temp[] = [
+                        'group' => ['objectId' => $group->getObjectId(), 'name' => $group->get('name')],
+                        'event'=> ['objectId' => $event->getObjectId(),
+                        'createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s'),
+                        'name' => $event->get('name'),
+                        'date' => $event->get('date')->format('Y-m-d H:i:s'),
+                        'inviteCode' => $event->get('inviteCode'),
+                        'invites' => $event->get('invites')]];
+
+                }
+            }
+            $ret = [
+                'status' => "success",
+                'data' => [
+                    'events' => $temp
+                ]
+            ];
+
+            return response()->json($ret);
+
+        } catch (ParseException $ex) {
+            $ret = [
+                'status' => 'fail',
+                'error' => $ex->getMessage()
+            ];
+            return response()->json($ret);
+        }
+    }
+
+    public function Events(Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+
+        try {
+
+            $query = ParseUser::query();
+            $current_user = $query->get($current_user->getObjectId());
+
+            $query = new ParseQuery("Groups");
+            //$query->equalTo('user', $current_user);
+            $query->equalTo('members', $current_user);
+            $groups = $query->find();
+            $dGroups = array();
+            foreach($groups as $group)
+            {
+                $temp = array();
+                $relation = $group->getRelation("events");
+                $query = $relation->getQuery();
+                $query->addAscending('date');
+                $events = $query->find();
+                foreach($events as $event)
+                {
+                    $temp = ['objectId' => $event->getObjectId(),
+                        'createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s'),
+                        'name' => $event->get('name'),
+                        'date' => $event->get('date')->format('Y-m-d H:i:s'),
+                        'inviteCode' => $event->get('inviteCode'),
+                        'invites' => $event->get('invites')];
+
+                    $dGroups[$event->get('date')->format('Y-m-d')][] = $temp;
+                    $dtemp = [
+                        'name' => $event->get('name'),
+                        'id' => $event->getObjectId(),
+                    ];
+                    $ddEvents[$event->get('date')->format('Y-m-d')]['dayEvents'][] = $dtemp;
+                    $ddEvents[$event->get('date')->format('Y-m-d')]['number'] = !empty($ddEvents[$event->get('date')->format('Y-m-d')]['number']) ? $ddEvents[$event->get('date')->format('Y-m-d')]['number'] + 1 : 1;
+                    $ddEvents[$event->get('date')->format('Y-m-d')]['badgeClass'] = "badge-warning";
+
+                    if ($ddEvents[$event->get('date')->format('Y-m-d')]['number'] == 1) {
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('chat', ['id' => $event->get('chatRoom')->getObjectId()]);
+                    }
+                    else {
+
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('calendarDayView', ['day' => $event->get('date')->format('Y-m-d')]);
+                    }
+                }
+            }
+            ksort($dGroups);
+            $ret = [
+                'status' => "success",
+                'data' => [
+                    'events' => $dGroups,
+                    'dsEvents' => $ddEvents
+                ]
+            ];
+
+            return response()->json($ret);
+
+        } catch (ParseException $ex) {
+            $ret = [
+                'status' => 'fail',
+                'error' => $ex->getMessage()
+            ];
+            return response()->json($ret);
+        }
+
+    }
 }

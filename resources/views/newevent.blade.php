@@ -11,7 +11,7 @@
                         <input type="text" name="name" class="form-control" id="name" placeholder="Event Name">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="display-block" name="eventDate" id="eventDate" placeholder="Date">
+                        <input type="text" class="display-block" name="eventDate" id="eventDate" @if(!empty($st))value="{{$st}}"@endif placeholder="Date">
                     </div>
                     <div class="placeholder">
                         <label for="groupname">Invite Your Friends</label>

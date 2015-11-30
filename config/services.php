@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => env('collabii.com'),
+        'secret' => env('key-b01191a070ebcf5719eef9383fc1dfdc'),
     ],
 
     'mandrill' => [

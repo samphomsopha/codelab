@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+//use Mail;
+use App\Library\Mail;
 use App\Library\Html;
 use App\Models;
 use Illuminate\Http\Request;
@@ -76,12 +78,76 @@ class HomeController extends SiteController {
         return view('home', $renderData);
     }
 
+    public function showDayView($day, Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+        Html\Assets::addLink(Html\Link::Css(elixir('css/calendar.css')));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/calendarDay.js')));
+
+        $tm = strtotime($day);
+        $dt = new \DateTime('now');
+        //$dt->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+        $dt->setTimestamp($tm);
+
+        try {
+            $query = ParseUser::query();
+            $current_user = $query->get($current_user->getObjectId());
+
+            $query = new ParseQuery("Groups");
+            //$query->equalTo('user', $current_user);
+            $query->equalTo('members', $current_user);
+            $groups = $query->find();
+            $dGroups = array();
+            $ddEvents = array();
+            $temp = array();
+            foreach($groups as $group)
+            {
+                $relation = $group->getRelation("events");
+                $query = $relation->getQuery();
+
+                $dt = new \DateTime('now');
+                //$dt->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+                $tm = strtotime($day);
+                $dt->setTimestamp($tm);
+
+                $query->equalTo('date', $dt);
+                //$query->addAscending('date');
+                $events = $query->find();
+                foreach($events as $event)
+                {
+                    $temp[] = [
+                        'group' => $group,
+                        'event'=> $event];
+                }
+            }
+
+        } catch (ParseException $ex) {
+            echo $ex->getMessage();die();
+        }
+
+        $renderData = $this->getRenderData($request);
+        $renderData['user'] = $current_user;
+        $renderData['day'] = $day;
+        $renderData['dt'] = $dt;
+        $renderData['events'] = $temp;
+        return view('calendarDay', $renderData);
+    }
+
     public function showCalendar(Request $request) {
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)
         {
             return redirect()->route('login');
         }
+        $dt = new \DateTime('now');
+        //$dt->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+        $st = $request->input('st');
+        if (!empty($st)) {
+            $tm = strtotime($st);
+            $dt->setTimestamp($tm);
+        }
+
+
         $query = ParseUser::query();
         $current_user = $query->get($current_user->getObjectId());
 
@@ -92,7 +158,22 @@ class HomeController extends SiteController {
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
         $renderData['user'] = $current_user;
+        $renderData['showdate'] = $dt;
         $renderData['activeBarTab'] = "calendar";
         return view('calendar', $renderData);
+    }
+
+    public function emailTest(Request $request)
+    {
+        $current_user = ParseUser::getCurrentUser();
+        if (!$current_user)
+        {
+            return redirect()->route('login');
+        }
+
+        $sendM = new Mail\Send();
+        $rt = $sendM->sendInviteEmail(array('samphomsopha@gmail.com'), $current_user, 'sciiex');
+        var_dump($rt);
+        echo "Done";
     }
 }

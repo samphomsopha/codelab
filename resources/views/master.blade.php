@@ -44,7 +44,6 @@
             <ul class="dropdown-menu">
                 <li>Add Event</li>
                 <li><a href="{{route('joinEvent')}}">Join Event</a></li>
-                <li>Invite Friends</li>
                 <li><a href="{{route('newgroup')}}">New Group</a></li>
                 <li><a href="{{route('joinGroup')}}">Join Group</a></li>
             </ul>

@@ -60,15 +60,13 @@ class GroupController extends SiteController {
     }
 
     public function joinGroup(Request $request) {
-
-        $current_user = ParseUser::getCurrentUser();
-
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);
 
         if ($request->method() == "POST" || $request->session()->get('lastAction') == 'joingroup')
         {
+            $current_user = ParseUser::getCurrentUser();
             if (!empty($current_user))
             {
                 $code = $request->input('inviteCode') ? : $request->session()->get('joingroup:inviteCode');
@@ -156,6 +154,7 @@ class GroupController extends SiteController {
             $temp['events'] = array();
             $relation = $group->getRelation("events");
             $query = $relation->getQuery();
+            $query->addAscending('date');
             $events = $query->find();
             foreach($events as $event)
             {
@@ -164,28 +163,6 @@ class GroupController extends SiteController {
 
             $dGroups[$group->getObjectId()] = $temp;
         }
-
-        //find events that this user maybe a member of
-        /*$query = new ParseQuery("Events");
-        $query ->equalTo('members', $current_user);
-        $query->includeKey('group');
-        $events = $query->find();
-
-        foreach($events as $event)
-        {
-            // if user owns this group, don't add
-            $tgroup = $event->get('group');
-            if ($tgroup->get('user') != $current_user) {
-                $temp = array_get($dGroups, $tgroup->getObjectId());
-                if (empty($temp)) {
-                    $temp['group'] = $tgroup;
-                    $temp['events'] = array();
-                }
-                $temp['events'][] = $event;
-
-                $dGroups[$tgroup->getObjectId()] = $temp;
-            }
-        }*/
 
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));

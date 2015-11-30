@@ -12,13 +12,8 @@ use Parse\ParseObject;
 use Symfony\Component\Yaml\Exception\ParseException;
 
 class ChatServiceController extends Controller {
-    private function init() {
-        session_start();
-        ParseClient::initialize( config('parse.app_id'), config('parse.api_key'), config('parse.master_key'));
-    }
 
     public function deleteMessage($id, Request $request) {
-        $this->init();
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)
         {
@@ -51,7 +46,6 @@ class ChatServiceController extends Controller {
     }
 
     public function newMessage(Request $request) {
-        $this->init();
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)
         {
@@ -64,6 +58,7 @@ class ChatServiceController extends Controller {
         $message = $request->input("message");
         $chat_id = $request->input("chat_id");
         $assets = $request->input("assets");
+        $utube = $request->input("youtube");
 
         if (!empty($message)) {
             try {
@@ -91,6 +86,24 @@ class ChatServiceController extends Controller {
                     }
                     $chatRoom->save();
                 }
+
+                if (!empty($utube))
+                {
+                    if (preg_match('/[\\?\\&]v=([^\\?\\&]+)/', $utube, $matches)) {
+                        $utube = $matches[1];
+
+                        $assetUobj = new ParseObject("Assets");
+                        // add the file we saved above
+                        $assetUobj->set("youtube", $utube);
+                        $assetUobj->save();
+                        $mrelation = $messageObj->getRelation("asset");
+                        $crelation = $chatRoom->getRelation("assets");
+
+                        $mrelation->add($assetUobj);
+                        $crelation->add($assetUobj);
+                        $chatRoom->save();
+                    }
+                }
                 $messageObj->save();
                 $ret = [
                     'status' => "success",
@@ -116,7 +129,6 @@ class ChatServiceController extends Controller {
     }
 
     public function upload(Request $request) {
-        $this->init();
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)
         {
@@ -135,7 +147,6 @@ class ChatServiceController extends Controller {
 
                 // save something to class TestObject
                 $asset = new ParseObject( "Assets" );
-                $asset->set( "foo", "bar" );
                 // add the file we saved above
                 $asset->set( "file", $file );
                 $asset->save();
@@ -169,8 +180,6 @@ class ChatServiceController extends Controller {
         }
     }
     public function getMessages($chatRoomId, $lastMsgId = null, $lastTime = null, Request $request) {
-
-        $this->init();
         $current_user = ParseUser::getCurrentUser();
         if (!$current_user)
         {

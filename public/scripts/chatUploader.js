@@ -16,11 +16,13 @@ $(function($){
     $(".send").on("click", function(e){
         e.preventDefault();
         var message = $("#message").val();
+        var youtube = $("#youtube").val();
         data = {
             message: message,
             chat_id: chat_id,
             _token: $('input:hidden[name=_token]').val(),
-            assets: assets
+            assets: assets,
+            youtube: youtube
         };
 
         $.ajax({

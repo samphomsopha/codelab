@@ -194,7 +194,8 @@ class ChatServiceController extends Controller {
                 $rtmsg[] = [
                     'user' => [
                         'Id' => $msg->get('user')->getObjectId(),
-                        'name' => $msg->get('user')->get('name')
+                        'name' => $msg->get('user')->get('name'),
+                        'image' => (!empty($msg->get('user')->get('image'))) ? $msg->get('user')->get('image')->getUrl() : ''
                     ],
                     'Id' => $msg->getObjectId(),
                     'message' => $msg->get('message'),

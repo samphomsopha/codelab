@@ -26,5 +26,6 @@ elixir(function(mix) {
         'scripts/chatUploader.js',
         'scripts/loading.js',
         'scripts/calendarDay.js',
+        'scripts/notify.js'
         ]);
 });

@@ -45,10 +45,10 @@ class ChatController extends SiteController {
             if (count($messages) > 0) {
                 $last_message = $messages[count($messages)-1];
                 $renderData['last_timer'] = $last_message->getCreatedAt()->getTimestamp();
-                $renderData['lastMsgId'] = $messages[count($messages)-1]->getObjectId();
+                $renderData['lastMsgId'] = !empty($messages[count($messages)-1]->getObjectId()) ? $messages[count($messages)-1]->getObjectId() : 0;
             } else {
                 $renderData['last_timer'] = 0;
-                $renderData['lastMsgId'] = '';
+                $renderData['lastMsgId'] = 0;
             }
 
 

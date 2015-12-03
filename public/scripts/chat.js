@@ -7,13 +7,31 @@ $(function ($) {
             $.get( url, function(data) {
                     if (data.status == "success") {
                         $.each(data.data, function(key, val) {
+                            console.log(val);
+                            var assets = '';
+                            if (val.assets.length > 0) {
+                                $.each(val.assets, function(key, ast){
+                                    console.log(ast);
+                                    if (ast.youtube != '') {
+                                        assets += '<div class="video-container">' +
+                                                    '<iframe width="560" height="315" src="http://www.youtube.com/embed/'+
+                                                    ast.youtube + '?rel=0" frameborder="0" allowfullscreen></iframe>'+
+                                                    '</div>';
+                                    }
+                                    else if (ast.url.match(/\.(jpeg|jpg|gif|png|JPEG|JPG|GIF|PNG)$/) != null) {
+                                        assets += '<img class="msgimg img-responsive" src="'+ast.url+'"/>';
+                                    } else {
+                                        assets += '<a class="download-asset" href="'+ast.url+'"><i class="fa fa-download">'+ast.name+'</i></a>';
+                                    }
+                                });
+                            }
                             insert = '<div class="row card card-b">' +
                             '<div class="col-xs-12">' +
                             '<div class="message">' +
                             '<div class="row">' +
                             '<div class="profile-img"> <img src="/img/profile.png"/> '+val.user.name+' </div>' +
                             '<div class="text">' +
-                            '<p>'+val.message+'</p>' +
+                            '<p>'+val.message+'</p>' + assets +
                             '<p class="timestamp">'+val.createdAt+'</p>' +
                             '</div></div></div></div></div>';
                             $(insert).insertBefore('.spacer');

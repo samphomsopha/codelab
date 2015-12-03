@@ -68,6 +68,7 @@
     </div>
     <script type="text/javascript">
         var chat_id = "{{$chatObj->getObjectId()}}";
+        var currentChatId = "{{$chatObj->getObjectId()}}";
         var last_timer = "{{$last_timer}}";
         var lastMsgId = "{{$lastMsgId}}";
         var PU = "{{$uId}}";

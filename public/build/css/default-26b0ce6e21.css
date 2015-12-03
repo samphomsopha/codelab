@@ -25,6 +25,16 @@ h5 {
 h6 {
   font-size: 24px;
 }
+.profile-img {
+  border-radius: 10px;
+  margin-right: 5px;
+  max-width: 100%;
+}
+.profile-img img {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+}
 .nav-title {
   margin-top: 2px;
   margin-bottom: 2px;
@@ -134,7 +144,9 @@ h6 {
   background-color: rgba(160, 187, 210, 0.27);
 }
 .content .card-b {
-  width: 96%;
+  width: 98%;
+  padding-left: 5px;
+  padding-right: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
@@ -160,6 +172,25 @@ h6 {
 .content .card-b .event-name .btn {
   padding-top: 0;
   padding-bottom: 0;
+}
+.content .card-b .notify .profile-img {
+  border-radius: 10px;
+  margin-right: 5px;
+  max-width: 100%;
+  float: left;
+}
+.content .card-b .notify .profile-img img {
+  width: 25px;
+  height: 25px;
+  border-radius: 5px;
+}
+.content .card-b .notify .msg {
+  margin-left: 30px;
+  color: inherit;
+}
+.content .card-b .notify .msg a {
+  color: inherit;
+  text-decoration: none;
 }
 .content .card-b .message {
   padding-top: 5px;
@@ -343,6 +374,9 @@ h6 {
 .error {
   color: red;
 }
+.notifyjs-container {
+  cursor: pointer;
+}
 .responsive-calendar .day a {
   margin: 2%;
   padding: 18% 0 18% 0;
@@ -365,6 +399,7 @@ h6 {
   top: 50%;
   left: 50%;
   margin: -28px 0 0 -25px;
+  z-index: 10;
 }
 
 /*# sourceMappingURL=default.css.map */

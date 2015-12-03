@@ -180,6 +180,17 @@ class ChatServiceController extends Controller {
             $rtmsg = [];
             foreach ($messages as $msg)
             {
+                $relation = $msg->getRelation('asset');
+                $assets = $relation->getQuery()->find();
+                $asts = array();
+                foreach($assets as $asset)
+                {
+                    $asts[] = [
+                        'name' => (!empty($asset->get('file'))) ? $asset->get('file')->getName() : '',
+                        'url' => (!empty($asset->get('file'))) ? $asset->get('file')->getUrl() : '',
+                        'youtube' => (!empty($asset->get('youtube'))) ? $asset->get('youtube') : ''
+                    ];
+                }
                 $rtmsg[] = [
                     'user' => [
                         'Id' => $msg->get('user')->getObjectId(),
@@ -188,7 +199,8 @@ class ChatServiceController extends Controller {
                     'Id' => $msg->getObjectId(),
                     'message' => $msg->get('message'),
                     'createdAt' => $msg->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a'),
-                    'timestamp' => $msg->getCreatedAt()->getTimestamp()
+                    'timestamp' => $msg->getCreatedAt()->getTimestamp(),
+                    'assets' => $asts
                 ];
             }
             $ret['status'] = 'success';

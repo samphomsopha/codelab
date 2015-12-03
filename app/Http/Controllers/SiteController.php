@@ -18,7 +18,9 @@ class SiteController extends Controller {
         Html\Assets::addLink(Html\Link::Script('/vendor/jquery/1.11.1/jquery.min.js'));
         Html\Assets::addLink(Html\Link::Script(elixir('scripts/loading.js')));
         Html\Assets::addLink(Html\Link::Script('/vendor/bootstrap/3.3.5/js/bootstrap.min.js'));
+        Html\Assets::addLink(Html\Link::Script('/vendor/notifyjs/notify.min.js'));
         Html\Assets::addLink(Html\Link::Script(elixir('scripts/footer.js')));
+        Html\Assets::addLink(Html\Link::Script(elixir('scripts/notify.js')));
     }
 
     public function getRenderData(Request $request)

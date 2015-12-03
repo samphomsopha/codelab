@@ -29,8 +29,13 @@ Route::post('/join-group', ['middleware' => ['parseinit'], 'uses' => 'GroupContr
 /** Group Services */
 Route::get('/services/groups/events', ['middleware' => ['parseinit', 'auth'], 'as' => 'groupService', 'uses' => 'GroupServiceController@events']);
 Route::get('/services/groups/events/{day}', ['middleware' => ['parseinit', 'auth'], 'as' => 'groupService', 'uses' => 'GroupServiceController@eventsByDay']);
+
+/** Notification **/
+Route::get('/notifications', ['middleware' => ['parseinit', 'auth'], 'as' => 'notification', 'uses' => 'HomeController@showNotifications']);
+/** Notification Server **/
+Route::get('/services/notifications/{chat_id?}', ['middleware' => ['parseinit', 'auth'], 'as' => 'getAlerts', 'uses' => 'NotificationServiceController@alerts']);
 /** Events */
-Route::get('/join-event', ['as' => 'joinEvent', 'uses' => 'EventController@joinEvent']);
+Route::get('/join-event', ['middleware' => ['parseinit'], 'as' => 'joinEvent', 'uses' => 'EventController@joinEvent']);
 Route::post('/join-event', ['middleware' => ['parseinit', 'auth'], 'uses' => 'EventController@joinEvent']);
 Route::get('/editevent/{id}', ['middleware' => ['parseinit', 'auth'], 'as' => 'editEvent', 'uses' => 'EventController@editEvent']);
 Route::get('/event/{id}/delete', ['middleware' => ['parseinit', 'auth'], 'as' => 'eventDelete', 'uses' => 'EventController@deleteEvent']);

@@ -163,6 +163,51 @@ class HomeController extends SiteController {
         return view('calendar', $renderData);
     }
 
+    public function showNotifications(Request $request) {
+        $current_user = ParseUser::getCurrentUser();
+        $query = new ParseQuery("Notifications");
+        $query->equalTo("for", $current_user);
+        $query->equalTo("read", false);
+
+        $query->includeKey('by');
+        $query->includeKey('message');
+        $query->addDescending('createdAt');
+        try
+        {
+            $notifications = $query->find();
+
+            Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
+            $renderData = $this->getRenderData($request);
+            $notes = array();
+            foreach ($notifications as $notify)
+            {
+                $byimage = $notify->get('by')->get('image');
+                $chatroom = $notify->get('message')->get('chatRoom');
+                $relation = $notify->get('message')->getRelation('asset');
+                $assets = $relation->getQuery()->find();
+                if (empty($chatroom))
+                {
+                    continue;
+                }
+                $chatroom->fetch();
+                $notes[] = [
+                    'notification' => $notify,
+                    'byimage' => $byimage,
+                    'chatRoom' => $chatroom,
+                    'assets' => $assets
+                ];
+                $notify->set("read", true);
+                $notify->save();
+            }
+            $renderData['user'] = $current_user;
+            $renderData['notifications'] = $notes;
+            return view('notification', $renderData);
+        } catch (\Exception $ex)
+        {
+            echo $ex->getMessage();die();
+        }
+    }
+
     public function emailTest(Request $request)
     {
         $current_user = ParseUser::getCurrentUser();

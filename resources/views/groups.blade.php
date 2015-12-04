@@ -5,7 +5,7 @@
         <div class="row card card-b">
             <div class="col-xs-12 padding-zero">
                 <div class="group-name">
-                    @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId())
+                    @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId() || $groupData['group']->get('public') == true)
                         <i class="fa fa-users"></i> <a href="{{route('editgroup', ['id' => $groupData['group']->getObjectId()])}}">{{$groupData['group']->get('name')}}</a>
                     @else
                         <i class="fa fa-users"></i>{{$groupData['group']->get('name')}}
@@ -35,4 +35,9 @@
             <button class="btn"><a href="{{route('joinGroup')}}">Join A Group</a></button>
         </div>
     @endif
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="spacer"></div>
+        </div>
+    </div>
 @stop

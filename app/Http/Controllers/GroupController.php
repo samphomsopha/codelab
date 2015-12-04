@@ -60,6 +60,7 @@ class GroupController extends SiteController {
             $lastAction = $request->session()->get('lastAction');
             $groupName = $request->input('groupname') ? : $request->session()->get('newgroup:groupName');
             $invites = $request->input('invites') ? : $request->session()->get('newgroup:invites');
+            $public = $request->input('public') ? : $request->session()->get('newgroup:public');
             $reroute = $request->input('reroute');
             $st = $request->input('st');
             $groupId = $request->input('id');
@@ -68,9 +69,10 @@ class GroupController extends SiteController {
                 //does this user have permission to edit group
                 $qry = new ParseQuery('Groups');
                 $groupObj = $qry->get($groupId);
-                if ($current_user->getObjectId() != $groupObj->get('user')->getObjectId())
-                {
-                    throw new HttpException(401, 'Sorry you don\'t have permission to edit group');
+                if ($groupObj->get('public') !== true) {
+                    if ($current_user->getObjectId() != $groupObj->get('user')->getObjectId()) {
+                        throw new HttpException(401, 'Sorry you don\'t have permission to edit group');
+                    }
                 }
             }
             else {
@@ -79,9 +81,19 @@ class GroupController extends SiteController {
 
             $groupObj->set('name', $groupName);
             $groupObj->set('user', $current_user);
+
+            if ($public == 'y') {
+                $groupObj->set('public', true);
+            } else {
+                $groupObj->set('public', false);
+            }
+
             if (empty($invites)) {
                 $invites = [];
             }
+
+            $invites = array_keys(array_flip($invites)); ;
+
             $prevInvites = $groupObj->get('invites') ? : array();
             $diffInvites = array_diff($invites, $prevInvites);
 
@@ -101,7 +113,7 @@ class GroupController extends SiteController {
                 if (!empty($diffInvites))
                 {
                     $send = new Mail\Send();
-                    $send->sendInviteEmail($diffInvites, $current_user, $groupObj->get('inviteCode'));
+                    $send->sendInviteEmail($diffInvites, $current_user, $groupObj->get('inviteCode'), $groupObj->get('name'));
                 }
                 if ($reroute == 'newevents') {
                     $url = route('newEvent', ['gid' => $groupObj->getObjectId()]) . '?st='.$st;
@@ -120,6 +132,7 @@ class GroupController extends SiteController {
             $request->session()->set('lastAction', 'newgroup');
             $request->session()->set('newgroup:groupName', $request->input('groupname'));
             $request->session()->set('newgroup:invites', $request->input('invites'));
+            $request->session()->set('newgroup:public', $request->input('public'));
             return redirect()->route('register');
         }
     }
@@ -159,7 +172,8 @@ class GroupController extends SiteController {
                     //clear last action
                     $request->session()->set('lastAction', '');
                     //redirect to chatroom
-                    return redirect()->route('groupView', ['id' => $groupObj->getObjectId()]);
+                    //return redirect()->route('groupView', ['id' => $groupObj->getObjectId()]);
+                    return redirect('/groups');
                 }
                 else
                 {
@@ -212,7 +226,8 @@ class GroupController extends SiteController {
                         //clear last action
                         $request->session()->set('lastAction', '');
                         //redirect to chatroom
-                        return redirect()->route('groupView', ['id' => $groupObj->getObjectId()]);
+                        //return redirect()->route('groupView', ['id' => $groupObj->getObjectId()]);
+                        return redirect('/groups');
                     }
                     else
                     {

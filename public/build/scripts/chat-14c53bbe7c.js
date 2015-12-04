@@ -31,7 +31,7 @@ $(function ($) {
                             '<div class="col-xs-12">' +
                             '<div class="message">' +
                             '<div class="row">' +
-                            '<div class="profile-img"> +userimg+ '+val.user.name+' </div>' +
+                            '<div class="profile-img">' + userimg +' '+ val.user.name + ' </div>' +
                             '<div class="text">' +
                             '<p>'+val.message+'</p>' + assets +
                             '<p class="timestamp">'+val.createdAt+'</p>' +

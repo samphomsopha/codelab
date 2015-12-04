@@ -8,7 +8,7 @@
                 <i class="fa fa-users"></i> {{$group->get('name')}}
                 <span class="ft-right"><a href="{{route('groupDelete', ['id' => $group->getObjectId()])}}">Delete</a></span>
             </div>
-            @if ($user->getObjectId() == $group->get('user')->getObjectId())
+            @if ($user->getObjectId() == $group->get('user')->getObjectId() || $group->get('public') == true)
             <div class="share">
                 Invite Code: <b>{{$group->get('inviteCode')}}</b>
             </div>
@@ -19,6 +19,7 @@
                 {!! Form::token() !!}
                 <input type="hidden" name="id" value="{{$group->getObjectId()}}"/>
                 <div class="form-group">
+                    Public <input type="checkbox" name="public" value="y"@if ($group->get('public')) checked @endif/>
                     <input type="text" name="groupname" class="form-control" id="groupname" value="{{$group->get('name')}}">
                 </div>
                 <div class="placeholder">
@@ -31,7 +32,9 @@
                             </div>
                         @endforeach
                     </div>
-                    <input type="text" name="invite" class="form-control" id="invite" placeholder="Add Email">
+                    <div>
+                        <input type="text" name="invite" class="form-control" id="invite" placeholder="Add Email">
+                    </div>
                 </div>
                 <div class="placeholder">
                     <label>Group Members</label>
@@ -44,9 +47,7 @@
                     </div>
                 </div>
                 <div class="margin-top-20">
-                    <p>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </p>
+                    <span class="ft-right"><button type="submit" class="btn btn-primary">Submit</button></span>
                 </div>
             </form>
             @else

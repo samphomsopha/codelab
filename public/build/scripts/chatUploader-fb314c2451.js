@@ -14,6 +14,7 @@ $(function($){
 
     $(".send").on("click", function(e){
         e.preventDefault();
+        loading();
         var message = $("#message").val();
         var youtube = $("#youtube").val();
         data = {

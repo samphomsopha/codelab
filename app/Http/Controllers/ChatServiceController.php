@@ -118,7 +118,8 @@ class ChatServiceController extends Controller {
             $chatRoomId = $request->input('chat_id');
             // save file to Parse
             try {
-                $file = ParseFile::createFromData( file_get_contents( $_FILES['image']['tmp_name'] ), $_FILES['image']['name']  );
+                $fname = str_replace(' ', '', $_FILES['image']['name']);
+                $file = ParseFile::createFromData( file_get_contents( $_FILES['image']['tmp_name'] ), $fname );
                 $file->save();
 
                 // save something to class TestObject

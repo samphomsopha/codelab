@@ -2,10 +2,18 @@
 @section('content')
     @include('profileheader')
     <div class="row card">
-        <div class="col-xs-12 text-center col-md-6 col-md-offset-3">
-            <span class="ft-left"><a href="/calendar/?st={{$day}}"><i class="fa fa-chevron-left nav-left"></i> Month</span></a>
+        <div class="col-xs-12 text-center">
+            <div class="calBtn">
+                <a href="#" class="btn btn-default active">Day</a>
+                <a href="{{route('calendarWeekView', ['date' => $dt->format('Y-m-d')])}}" class="btn btn-default">Week</a>
+                <a href="/calendar/?st={{$dt->format('Y-m-d')}}" class="btn btn-default">Month</a>
+            </div>
+        </div>
+        <div class="col-xs-12 text-center">
+            <span class="prevdate"><a href="{{route('calendarDayView', ['day' => $prevDt->format('Y-m-d')])}}">{{$prevDt->format('D d')}}</a></span>
+            <span class="currdate">{{$dt->format('D M j')}}</span>
+            <span class="nextdate"><a href="{{route('calendarDayView', ['day' => $nextDt->format('Y-m-d')])}}">{{$nextDt->format('D d')}}</a></span>
             <span class="ft-right"><a href="{{route('newCalendarEvent',['day' => $dt->format('Y-m-d')])}}"><i class="fa fa-plus-circle"></i> New Event</a></span>
-            <h4>{{$dt->format('D M j')}}</h4>
         </div>
     </div>
     <div class="row card card-b min-height">
@@ -27,6 +35,13 @@
             <hr>
         </div>
     @endforeach
+    @if (empty($events))
+        <div class="col-xs-12 padding-zero">
+            <div class="group-name">
+                No Events Today
+            </div>
+        </div>
+    @endif
     </div>
     <script type="text/javascript">
         var showTime = "{{$dt->format('Y-m-d')}}";

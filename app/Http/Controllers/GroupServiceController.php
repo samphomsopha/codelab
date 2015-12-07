@@ -13,7 +13,7 @@ use Symfony\Component\Yaml\Exception\ParseException;
 
 class GroupServiceController extends Controller {
 
-    public function eventsByDay($day, Request $request) {
+    public function eventsByWeek(Request $request, $week) {
         $current_user = ParseUser::getCurrentUser();
 
         try {
@@ -26,9 +26,74 @@ class GroupServiceController extends Controller {
             $groups = $query->find();
             $dGroups = array();
             $ddEvents = array();
+            $temp = array();
+
             foreach($groups as $group)
             {
-                $temp = array();
+                $relation = $group->getRelation("events");
+                $query = $relation->getQuery();
+
+                $dt = new \DateTime('now');
+                //$dt->setTimezone(new \DateTimeZone('America/Los_Angeles'));
+                $tm = strtotime($week);
+                $dt->setTimestamp($tm);
+                $dtend = clone($dt);
+                $dtend->add(new \DateInterval('P7D'));
+                $query->greaterThanOrEqualTo('date', $dt);
+                $query->lessThanOrEqualTo('date', $dtend);
+
+                $query->addAscending('date');
+                $events = $query->find();
+
+                foreach($events as $event)
+                {
+                    $temp[$event->get('date')->format('Y-m-d')][] = [
+                        'group' => ['objectId' => $group->getObjectId(), 'name' => $group->get('name')],
+                        'event'=> ['objectId' => $event->getObjectId(),
+                            'createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s'),
+                            'name' => $event->get('name'),
+                            'date' => $event->get('date')->format('Y-m-d H:i:s'),
+                            'inviteCode' => $event->get('inviteCode'),
+                            'invites' => $event->get('invites')]];
+
+                }
+            }
+
+            $ret = [
+                'status' => "success",
+                'data' => [
+                    'events' => $temp
+                ]
+            ];
+
+            return response()->json($ret);
+
+        } catch (ParseException $ex) {
+            $ret = [
+                'status' => 'fail',
+                'error' => $ex->getMessage()
+            ];
+            return response()->json($ret);
+        }
+    }
+
+    public function eventsByDay(Request $request, $day) {
+        $current_user = ParseUser::getCurrentUser();
+
+        try {
+            $query = ParseUser::query();
+            $current_user = $query->get($current_user->getObjectId());
+
+            $query = new ParseQuery("Groups");
+            //$query->equalTo('user', $current_user);
+            $query->equalTo('members', $current_user);
+            $groups = $query->find();
+            $dGroups = array();
+            $ddEvents = array();
+            $temp = array();
+
+            foreach($groups as $group)
+            {
                 $relation = $group->getRelation("events");
                 $query = $relation->getQuery();
 

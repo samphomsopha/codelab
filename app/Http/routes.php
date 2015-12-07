@@ -29,6 +29,7 @@ Route::post('/join-group', ['middleware' => ['parseinit'], 'uses' => 'GroupContr
 /** Group Services */
 Route::get('/services/groups/events', ['middleware' => ['parseinit', 'auth'], 'as' => 'groupService', 'uses' => 'GroupServiceController@events']);
 Route::get('/services/groups/events/{day}', ['middleware' => ['parseinit', 'auth'], 'as' => 'groupService', 'uses' => 'GroupServiceController@eventsByDay']);
+Route::get('/services/groups/events/week/{week}', ['middleware' => ['parseinit', 'auth'], 'as' => 'groupService', 'uses' => 'GroupServiceController@eventsByWeek']);
 
 /** Notification **/
 Route::get('/notifications', ['middleware' => ['parseinit', 'auth'], 'as' => 'notification', 'uses' => 'HomeController@showNotifications']);
@@ -49,8 +50,10 @@ Route::post('/chat/upload', ['middleware' => ['parseinit', 'auth'], 'as' => 'cha
 Route::post('/chat/message', ['middleware' => ['parseinit', 'auth'], 'as' => 'chatNewMessage', 'uses' => 'ChatServiceController@newMessage']);
 
 /** calender */
-Route::get('/calendar', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendar', 'uses' => 'HomeController@showCalendar']);
-Route::get('/calendar/{day}', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendarDayView', 'uses' => 'HomeController@showDayView']);
+Route::get('/calendar', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendar', 'uses' => 'CalendarController@showCalendar']);
+Route::get('/calendar/month/{date?}', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendarMonthView', 'uses' => 'CalendarController@showCalendar']);
+Route::get('/calendar/week/{date?}', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendarWeekView', 'uses' => 'CalendarController@showWeekView']);
+Route::get('/calendar/day/{day?}', ['middleware' => ['parseinit', 'auth'], 'as' => 'calendarDayView', 'uses' => 'CalendarController@showDayView']);
 
 
 /** messages */

@@ -10,7 +10,7 @@ $(function ($) {    //get here
                 activateNonCurrentMonths: true,
                 onDayClick: function(events) {
                     var date = $(this).data();
-                    window.location.replace('/calendar/'+date.year+'-'+date.month+'-'+date.day);
+                    window.location.replace('/calendar/day/'+date.year+'-'+date.month+'-'+date.day);
                 }
             });
         }

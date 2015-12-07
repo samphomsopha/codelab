@@ -1,8 +1,12 @@
 @extends('master')
 @section('content')
     @include('profileheader')
-
     <div class="row card">
+        <div class="col-xs-12 text-center">
+            <a href="/calendar/day" class="btn btn-default">Day</a>
+            <a href="/calendar/week" class="btn btn-default">Week</a>
+            <a href="#" class="btn btn-default active">Month</a>
+        </div>
         <div class="col-xs-12 text-center col-md-6 col-md-offset-3">
             <!-- Responsive calendar - START -->
             <div class="responsive-calendar">

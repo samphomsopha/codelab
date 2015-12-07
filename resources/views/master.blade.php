@@ -17,12 +17,6 @@
 
 <nav class="navbar navbar-default navbar-fixed-bottom nav-bottom">
     <ul class="nav nav-pills">
-        <li role="presentation"@if (@$activeBarTab =="dashboard") class="active"@endif>
-            <a href="/home">
-                <div class="nav-icon"><i class="fa fa-newspaper-o"></i></span></div>
-                <div class="nav-link">Conversions</div>
-            </a>
-        </li>
         <li role="presentation"@if (@$activeBarTab =="calendar") class="active"@endif>
             <a href="/calendar">
                 <div class="nav-icon"><i class="fa fa-calendar"></i></div>
@@ -35,6 +29,13 @@
                 <div class="nav-link">Groups</div>
             </a>
         </li>
+        <li role="presentation"@if (@$activeBarTab =="dashboard") class="active"@endif>
+            <a href="/home">
+                <div class="nav-icon"><i class="fa fa-newspaper-o"></i></span></div>
+                <div class="nav-link">Chats</div>
+            </a>
+        </li>
+
         <li role="presentation" class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
                 <div class="nav-icon"><i class="fa fa-bars"></i></span></div>

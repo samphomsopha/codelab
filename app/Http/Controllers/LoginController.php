@@ -183,7 +183,7 @@ class LoginController extends SiteController {
                 return redirect()->route('joinEvent');
                 break;
             default:
-                return redirect()->route('home');
+                return redirect('/calendar');
         }
     }
 }

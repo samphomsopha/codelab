@@ -58,13 +58,11 @@ class CalendarController extends SiteController {
         $prevWeek->sub(new \DateInterval('P7D'));
         $nextWeek->add(new \DateInterval('P7D'));
 
-        $week['dis'][] = $tmdt->format('d D');
-        $week['dt'][] = $tmdt->format('Y-m-d');
+        $week[] = ['dis' => $tmdt->format('d D'), 'dt' => $tmdt->format('Y-m-d')];
         for ($i = 0; $i < 6; $i++)
         {
             $tmdt->add(new \DateInterval('P1D'));
-            $week['dis'][] = $tmdt->format('d D');
-            $week['dt'][] = $tmdt->format('Y-m-d');
+            $week[] = ['dis' => $tmdt->format('d D'), 'dt' => $tmdt->format('Y-m-d')];
         }
 
         try {

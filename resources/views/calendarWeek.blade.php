@@ -14,18 +14,18 @@
         <div class="col-xs-12 text-center weekCal">
             <h5>{{$dt->format('F')}}</h5>
             <div class="row">
-                @foreach ($week['dis'] as $wkday)
+                @foreach ($week as $wkday)
                     <div class="calHeader">
-                        {{$wkday}}
+                        <a href="{{route('calendarDayView', ['day' => $wkday['dt']])}}">{{$wkday['dis']}}</a>
                     </div>
                 @endforeach
             </div>
             <div class="row weekRow">
-                @foreach ($week['dt'] as $wkday)
+                @foreach ($week as $wkday)
                     <div class="calDay">
-                        <div><a href="{{route('newCalendarEvent',['day' => $wkday])}}"><i class="fa fa-plus-circle"></i> Event</a></div>
-                        @if (!empty($events[$wkday]))
-                            @foreach($events[$wkday] as $event)
+                        <div><a href="{{route('newCalendarEvent',['day' => $wkday['dt']])}}"><i class="fa fa-plus-circle"></i> Event</a></div>
+                        @if (!empty($events[$wkday['dt']]))
+                            @foreach($events[$wkday['dt']] as $event)
                                 <div class="entry"><a href="{{route('chat', ['roomId' => $event['event']->get('chatRoom')->getObjectId()])}}">{{$event['event']->get('name')}}</a></div>
                             @endforeach
                         @endif

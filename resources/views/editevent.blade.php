@@ -30,7 +30,7 @@
                 </div>
                 <div class="margin-top-20">
                     <p>
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </p>
                 </div>
             </form>

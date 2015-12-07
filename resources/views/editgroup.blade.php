@@ -48,7 +48,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="margin-top-20">
-                    <span class="ft-right"><button type="submit" class="btn btn-primary">Submit</button></span>
+                    <span class="ft-right"><button type="submit" class="btn btn-primary">Save</button></span>
                 </div>
             </form>
             @else

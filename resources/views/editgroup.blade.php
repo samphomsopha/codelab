@@ -45,6 +45,7 @@
                         </div>
                     @endforeach
                     </div>
+                    <div class="clearfix"></div>
                 </div>
                 <div class="margin-top-20">
                     <span class="ft-right"><button type="submit" class="btn btn-primary">Submit</button></span>
@@ -53,6 +54,11 @@
             @else
                 <h4>Sorry, you don't have permission to edit this group.</h4>
             @endif
+        </div>
+    </div>
+    <div class="row spacer">
+        <div class="col-xs-12">
+            <div class="spacer-chat"></div>
         </div>
     </div>
 @stop

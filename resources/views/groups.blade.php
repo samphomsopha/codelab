@@ -20,7 +20,7 @@
                         <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
                     </div>
                 @endforeach
-                @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId())
+                @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId() || $groupData['group']->get('public') == true)
                 <div class="event-name">
                     <span class="ft-right"><button class="btn btn-default"><a href="{{route('newEvent',['gid' => $groupData['group']->getObjectId()])}}">New Event</a></button></span>
                 </div>

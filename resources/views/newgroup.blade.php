@@ -13,7 +13,9 @@
                     <div class="placeholder">
                         <label for="groupname">Invite Your Friends</label>
                         <div class="friends"></div>
+                        <div>
                         <input type="text" name="invite" class="form-control" id="invite" placeholder="Add Email">
+                        </div>
                         <span class="ft-right"><button type="submit" class="btn btn-primary">Submit</button></span>
                     </div>
                 </form>

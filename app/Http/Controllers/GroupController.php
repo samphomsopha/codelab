@@ -33,7 +33,7 @@ class GroupController extends SiteController {
         try {
             $group = $query->get($gid);
             $owner = $group->get('user')->fetch();
-            if ($current_user->getObjectId() != $owner->getObjectId())
+            if ($current_user->getObjectId() != $owner->getObjectId() && $group->get('public') !== true)
             {
                 throwException(401, "Sorry you don't have access to delete this group.");
             }

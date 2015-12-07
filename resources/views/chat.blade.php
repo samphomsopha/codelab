@@ -28,7 +28,7 @@
                                 @endif
                             @endforeach
                             @if($user->getObjectId() == $messageObj['message']->get('user')->getObjectId())
-                                <p class="control"><button class="btn btn-delete-msg" data-id="{{$messageObj['message']->getObjectId()}}">delete</button></p>
+                                <p class="control"><button class="btn btn-default btn-delete-msg" data-id="{{$messageObj['message']->getObjectId()}}">delete</button></p>
                             @endif
                             <p class="timestamp">{{$messageObj['message']->getCreatedAt()->setTimezone(new \DateTimeZone('America/Los_Angeles'))->format('D M d, h:i:s a')}}</p>
                         </div>

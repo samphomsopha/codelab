@@ -44,11 +44,11 @@
                 </div>
             </a>
             <ul class="dropdown-menu">
-                <li><a href="/logout">Logout</a></li>
                 <li><a href="{{route('newCalendarEvent',['day' => 'now'])}}">Add Event</a></li>
                 <li><a href="{{route('joinEvent')}}">Join Event</a></li>
                 <li><a href="{{route('newgroup')}}">New Group</a></li>
                 <li><a href="{{route('joinGroup')}}">Join Group</a></li>
+                <li><a href="/logout">Logout</a></li>
             </ul>
         </li>
     </ul>

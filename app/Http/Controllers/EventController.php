@@ -130,6 +130,7 @@ class EventController extends SiteController {
                     $grelation->add($eventObj);
                     $group->save();
                     //-- create chat room --//
+                    /** Don't create New Group **/
                     $chatObj = new ParseObject('ChatRoom');
                     $chatObj->set('name', $eventObj->get('name'));
                     $chatObj->set('event', $eventObj);

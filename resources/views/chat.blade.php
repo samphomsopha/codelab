@@ -21,7 +21,7 @@
                                     <div class="video-container">
                                         <iframe width="560" height="315" src="http://www.youtube.com/embed/{{$assetObj->get('youtube')}}?rel=0" frameborder="0" allowfullscreen></iframe>
                                     </div>
-                                @elseif (in_array(substr($assetObj->get('file')->getUrl(),strrpos($assetObj->get('file')->getUrl(), '.')+1), ['jpg','jpeg','gif','png']))
+                                @elseif (in_array(substr($assetObj->get('file')->getUrl(),strrpos($assetObj->get('file')->getUrl(), '.')+1), ['jpg','jpeg','gif','png', 'JPG', 'JPEG', 'GIF', 'PNG']))
                                     <img class="msgimg img-responsive" src="{{$assetObj->get('file')->getUrl()}}"/>
                                 @else
                                     <a class="download-asset" href="{{$assetObj->get('file')->getUrl()}}"><i class="fa fa-download">{{substr($assetObj->get('file')->getName(),strrpos($assetObj->get('file')->getName(), '-')+1)}}</i></a>

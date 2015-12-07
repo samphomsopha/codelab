@@ -46,7 +46,6 @@ class ChatServiceController extends Controller {
         $assets = $request->input("assets");
         $utube = $request->input("youtube");
 
-        if (!empty($message)) {
             try {
                 $messageObj = new ParseObject("Messages");
                 $query = new ParseQuery("ChatRoom");
@@ -110,7 +109,6 @@ class ChatServiceController extends Controller {
                 ];
                 return response()->json($ret);
             }
-        }
     }
 
     public function upload(Request $request) {

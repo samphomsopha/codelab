@@ -99,10 +99,12 @@ class EventController extends SiteController {
                 $eventDate = $request->input('eventDate');
                 $invites = $request->input('invites');
 
+                $update = false;
                 $id = $request->input('id');
                 if (!empty($id)) {
                     $qry = new ParseQuery('Events');
                     $eventObj = $qry->get($id);
+                    $update = true;
                 } else {
                     $eventObj = new ParseObject('Events');
                 }
@@ -123,23 +125,25 @@ class EventController extends SiteController {
                 $eventObj->set('group', $group);
                 try {
                     $eventObj->save();
-                    $relation = $eventObj->getRelation('members');
-                    $relation->add($current_user);
-                    $eventObj->save();
-                    $grelation = $group->getRelation('events');
-                    $grelation->add($eventObj);
-                    $group->save();
-                    //-- create chat room --//
-                    /** Don't create New Group **/
-                    $chatObj = new ParseObject('ChatRoom');
-                    $chatObj->set('name', $eventObj->get('name'));
-                    $chatObj->set('event', $eventObj);
-                    $chatObj->save();
-                    $relation = $chatObj->getRelation('members');
-                    $relation->add($current_user);
-                    $chatObj->save();
-                    $eventObj->set('chatRoom', $chatObj);
-                    $eventObj->save();
+                    if ($update == false)
+                    {
+                        $relation = $eventObj->getRelation('members');
+                        $relation->add($current_user);
+                        $eventObj->save();
+                        $grelation = $group->getRelation('events');
+                        $grelation->add($eventObj);
+                        $group->save();
+                        //-- create chat room --//
+                        $chatObj = new ParseObject('ChatRoom');
+                        $chatObj->set('name', $eventObj->get('name'));
+                        $chatObj->set('event', $eventObj);
+                        $chatObj->save();
+                        $relation = $chatObj->getRelation('members');
+                        $relation->add($current_user);
+                        $chatObj->save();
+                        $eventObj->set('chatRoom', $chatObj);
+                        $eventObj->save();
+                    }
                     return redirect('/groups');
                 }
                 catch (ParseException $ex) {

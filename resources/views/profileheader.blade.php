@@ -14,7 +14,6 @@
         </div>
     </div>
     <div class="col-xs-4">
-        <a href="/logout">Logout</a>
         <div>
             <img class="logo" src="/img/logo.png"/>
         </div>

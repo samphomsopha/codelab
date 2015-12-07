@@ -181,21 +181,24 @@ class HomeController extends SiteController {
             $notes = array();
             foreach ($notifications as $notify)
             {
-                $byimage = $notify->get('by')->get('image');
-                $chatroom = $notify->get('message')->get('chatRoom');
-                $relation = $notify->get('message')->getRelation('asset');
-                $assets = $relation->getQuery()->find();
-                if (empty($chatroom))
+                if (!empty($notify->get('message')))
                 {
-                    continue;
+                    $byimage = $notify->get('by')->get('image');
+                    $chatroom = $notify->get('message')->get('chatRoom');
+                    $relation = $notify->get('message')->getRelation('asset');
+                    $assets = $relation->getQuery()->find();
+                    if (empty($chatroom))
+                    {
+                        continue;
+                    }
+                    $chatroom->fetch();
+                    $notes[] = [
+                        'notification' => $notify,
+                        'byimage' => $byimage,
+                        'chatRoom' => $chatroom,
+                        'assets' => $assets
+                    ];
                 }
-                $chatroom->fetch();
-                $notes[] = [
-                    'notification' => $notify,
-                    'byimage' => $byimage,
-                    'chatRoom' => $chatroom,
-                    'assets' => $assets
-                ];
                 $notify->set("read", true);
                 $notify->save();
             }

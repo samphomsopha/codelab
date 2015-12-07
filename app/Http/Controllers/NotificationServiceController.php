@@ -27,19 +27,22 @@ class NotificationServiceController extends Controller {
             $notes = array();
             foreach ($notifications as $notify)
             {
-                if ($notify->get('message')->get('chatRoom')->getObjectId() == $cc)
+                if (!empty($notify->get('message')))
                 {
-                    $notify->set("read", true);
-                    $notify->save();
-                    continue;
-                }
+                    if ($notify->get('message')->get('chatRoom')->getObjectId() == $cc)
+                    {
+                        $notify->set("read", true);
+                        $notify->save();
+                        continue;
+                    }
 
-                $notes[] = [
-                    'id' => $notify->getObjectId(),
-                    'for' => $notify->get('for')->getObjectId(),
-                    'from' => ['id' => $notify->get('by')->getObjectId(), 'name' => $notify->get('by')->get('name')],
-                    'message' => $notify->get('message')->get('message')
-                ];
+                    $notes[] = [
+                        'id' => $notify->getObjectId(),
+                        'for' => $notify->get('for')->getObjectId(),
+                        'from' => ['id' => $notify->get('by')->getObjectId(), 'name' => $notify->get('by')->get('name')],
+                        'message' => $notify->get('message')->get('message')
+                    ];
+                }
             }
             $ret = [
                 'status' => "success",

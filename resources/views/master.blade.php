@@ -20,7 +20,7 @@
         <li role="presentation"@if (@$activeBarTab =="dashboard") class="active"@endif>
             <a href="/home">
                 <div class="nav-icon"><i class="fa fa-newspaper-o"></i></span></div>
-                <div class="nav-link">Dashboard</div>
+                <div class="nav-link">Conversions</div>
             </a>
         </li>
         <li role="presentation"@if (@$activeBarTab =="calendar") class="active"@endif>

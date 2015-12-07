@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'HomeController@showIndex');
+Route::get('/', ['uses' => 'HomeController@showIndex', 'middleware' => ['parseinit']]);
 Route::get('/home', ['middleware' => ['parseinit', 'auth'], 'as' => 'home', 'uses' => 'HomeController@showHome']);
 Route::get('/testmail', ['middleware' => ['parseinit', 'auth'], 'uses' => 'HomeController@emailTest']);
 /** Group **/

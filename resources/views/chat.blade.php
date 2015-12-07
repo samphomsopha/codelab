@@ -2,6 +2,7 @@
 @section('content')
     @include('navheader')
     @foreach($messages as $messageObj)
+        @if (!empty($messageObj['message']->get('user')))
         <div class="row card card-b">
             <div class="col-xs-12">
                 <div class="message">
@@ -36,6 +37,7 @@
                 </div>
             </div>
         </div>
+        @endif
     @endforeach
     <div class="row spacer">
         <div class="col-xs-12">

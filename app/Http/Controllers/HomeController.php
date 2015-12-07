@@ -13,7 +13,11 @@ use Parse\ParseObject;
 class HomeController extends SiteController {
 
     public function showIndex(Request $request) {
-
+        $current_user = ParseUser::getCurrentUser();
+        if (!empty($current_user))
+        {
+            return redirect('/calendar');
+        }
         Html\Assets::addLink(Html\Link::Css(elixir('css/default.css')));
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
         $renderData = $this->getRenderData($request);

@@ -24,6 +24,7 @@ class ChatController extends SiteController {
         Html\Assets::addMetaTag(Html\Meta::Tag('description', ''));
 
         $query = new ParseQuery("ChatRoom");
+        $query->includeKey('event');
         try {
             $chatObj = $query->get($roomId);
             // get events
@@ -56,7 +57,7 @@ class ChatController extends SiteController {
             $renderData['user'] = $current_user;
             $renderData['chatObj'] = $chatObj;
             $renderData['messages'] = $msArr;
-            $renderData['navTitle'] = $chatObj->get('name');
+            $renderData['navTitle'] = $chatObj->get('event')->get('name');
             $renderData['user'] = $current_user;
 
             $renderData['uId'] = $current_user->getObjectId();

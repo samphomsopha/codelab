@@ -33,7 +33,7 @@ $(function ($) {
                             '<div class="row">' +
                             '<div class="profile-img">' + userimg +' '+ val.user.name + ' </div>' +
                             '<div class="text">' +
-                            '<p>'+val.message+'</p>' + assets +
+                            '<p>'+val.message.replace(/(?:\r\n|\r|\n)/g, '<br />');+'</p>' + assets +
                             '<p class="timestamp">'+val.createdAt+'</p>' +
                             '</div></div></div></div></div>';
                             $(insert).insertBefore('.spacer');

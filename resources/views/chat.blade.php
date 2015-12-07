@@ -15,7 +15,7 @@
                             {{$messageObj['message']->get('user')->get('name')}}
                         </div>
                         <div class="text">
-                            <p>{{$messageObj['message']->get('message')}}</p>
+                            <p>{!!nl2br($messageObj['message']->get('message'))!!}</p>
                             @foreach($messageObj['assets'] as $assetObj)
                                 @if (!empty($assetObj->get('youtube')))
                                     <div class="video-container">

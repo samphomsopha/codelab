@@ -9,7 +9,9 @@
             @foreach($events as $event)
                 <div class="event-name">
                     <i class="fa fa-comments-o"></i> <a href="{{route('chat', ['roomId' => $event->get('chatRoom')->getObjectId()])}}">{{$event->get('name')}}</a>
-                    <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
+                    @if (!empty($event->get('date')))
+                        <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
+                    @endif
                 </div>
             @endforeach
         </div>

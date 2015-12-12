@@ -17,7 +17,9 @@
                         @if ($user->getObjectId() == $event->get('user')->getObjectId())
                             <a href="{{route('editEvent', ['id' => $event->getObjectId()])}}">[edit]</a>
                         @endif
+                        @if (!empty($event->get('date')))
                         <span class="timestamp">{{$event->get('date')->format('m-d-Y')}}</span>
+                        @endif
                     </div>
                 @endforeach
                 @if ($user->getObjectId() == $groupData['group']->get('user')->getObjectId() || $groupData['group']->get('public') == true)

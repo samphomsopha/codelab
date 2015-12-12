@@ -7,9 +7,9 @@
     <div class="col-xs-4">
         <div class="profile-img">
             @if (!empty($user->get('image')))
-                <img src="{{$user->get('image')->getUrl()}}">
+                <a href="{{route('profile')}}"><img src="{{$user->get('image')->getUrl()}}"></a>
             @else
-                <img src="/img/profile.png"/>
+                <a href="{{route('profile')}}"><img src="/img/profile.png"/></a>
             @endif
         </div>
     </div>

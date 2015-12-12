@@ -20,7 +20,7 @@
                     <input type="text" name="name" class="form-control" id="name" placeholder="Event Name" value="{{$event->get('name')}}">
                 </div>
                 <div class="form-group">
-                    <input type="text" class="display-block" name="eventDate" id="eventDate" value="{{$event->get('date')->format('m/d/Y')}}" placeholder="Date">
+                    <input type="text" class="display-block" name="eventDate" id="eventDate" value="@if(!empty($event->get('date'))) {{$event->get('date')->format('m/d/Y')}} @endif" placeholder="Date">
                 </div>
                 <div class="placeholder">
                     <label for="groupname">Invite Your Friends</label>

@@ -256,6 +256,27 @@ h6 {
   font-family: inherit;
   font-size: 24px;
 }
+.content .card-b .profile {
+  margin: 0 auto;
+  text-align: center;
+}
+.content .card-b .profile img {
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+}
+.content .card-b .profile .edit img {
+  width: 120px;
+  height: 120px;
+  border: 2px dashed black;
+  border-radius: 60px;
+}
+.content .card-b .profile .form-control.name {
+  font-size: 20px;
+  height: 45px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
 .content .message-entry {
   position: fixed;
   bottom: 45px;

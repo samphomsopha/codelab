@@ -14,6 +14,12 @@
 Route::get('/', ['uses' => 'HomeController@showIndex', 'middleware' => ['parseinit']]);
 Route::get('/home', ['middleware' => ['parseinit', 'auth'], 'as' => 'home', 'uses' => 'HomeController@showHome']);
 Route::get('/testmail', ['middleware' => ['parseinit', 'auth'], 'uses' => 'HomeController@emailTest']);
+
+/** Profile **/
+Route::get('/profile/', ['as' => 'profile', 'uses' => 'ProfileController@showIndex', 'middleware' => ['parseinit', 'auth']]);
+Route::get('/profile/edit', ['as' => 'editProfile', 'uses' => 'ProfileController@showEdit', 'middleware' => ['parseinit', 'auth']]);
+Route::post('/profile/save', ['as' => 'saveProfile', 'uses' => 'ProfileController@save', 'middleware' => ['parseinit', 'auth']]);
+Route::post('/services/profile/upload', ['as' => 'uploadProfile', 'uses' => 'ProfileServiceController@upload', 'middleware' => ['parseinit', 'auth']]);
 /** Group **/
 Route::get('/groups', ['middleware' => ['parseinit', 'auth'], 'as' => 'groups', 'uses' => 'GroupController@showGroups']);
 Route::get('/group/', ['middleware' => ['parseinit', 'auth'], 'as' => 'group', 'uses' => 'GroupController@showGroup']);

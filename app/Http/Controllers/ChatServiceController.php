@@ -151,6 +151,7 @@ class ChatServiceController extends Controller {
             return response()->json($ret);
         }
     }
+
     public function getMessages($chatRoomId, $lastMsgId = null, $lastTime = null, Request $request) {
         $query = new ParseQuery("ChatRoom");
         try {

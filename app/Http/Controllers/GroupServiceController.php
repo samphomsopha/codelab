@@ -158,22 +158,25 @@ class GroupServiceController extends Controller {
                 $events = $query->find();
                 foreach($events as $event)
                 {
-                    $temp = ['objectId' => $event->getObjectId(),
-                        'createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s'),
-                        'name' => $event->get('name'),
-                        'date' => $event->get('date')->format('Y-m-d H:i:s'),
-                        'inviteCode' => $event->get('inviteCode'),
-                        'invites' => $event->get('invites')];
+                    //make sure event has date set
+                    if (!empty($event->get('date'))) {
+                        $temp = ['objectId' => $event->getObjectId(),
+                            'createdAt' => $event->getCreatedAt()->format('Y-m-d H:i:s'),
+                            'name' => $event->get('name'),
+                            'date' => $event->get('date')->format('Y-m-d H:i:s'),
+                            'inviteCode' => $event->get('inviteCode'),
+                            'invites' => $event->get('invites')];
 
-                    $dGroups[$event->get('date')->format('Y-m-d')][] = $temp;
-                    $dtemp = [
-                        'name' => $event->get('name'),
-                        'id' => $event->getObjectId(),
-                    ];
-                    $ddEvents[$event->get('date')->format('Y-m-d')]['dayEvents'][] = $dtemp;
-                    $ddEvents[$event->get('date')->format('Y-m-d')]['number'] = !empty($ddEvents[$event->get('date')->format('Y-m-d')]['number']) ? $ddEvents[$event->get('date')->format('Y-m-d')]['number'] + 1 : 1;
-                    $ddEvents[$event->get('date')->format('Y-m-d')]['badgeClass'] = "badge-warning";
-                    $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('calendarDayView', ['day' => $event->get('date')->format('Y-m-d')]);
+                        $dGroups[$event->get('date')->format('Y-m-d')][] = $temp;
+                        $dtemp = [
+                            'name' => $event->get('name'),
+                            'id' => $event->getObjectId(),
+                        ];
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['dayEvents'][] = $dtemp;
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['number'] = !empty($ddEvents[$event->get('date')->format('Y-m-d')]['number']) ? $ddEvents[$event->get('date')->format('Y-m-d')]['number'] + 1 : 1;
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['badgeClass'] = "badge-warning";
+                        $ddEvents[$event->get('date')->format('Y-m-d')]['url'] = route('calendarDayView', ['day' => $event->get('date')->format('Y-m-d')]);
+                    }
                 }
             }
             ksort($dGroups);
